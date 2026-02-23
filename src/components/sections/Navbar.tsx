@@ -44,9 +44,7 @@ export function Navbar() {
         )}>
             <div className="container px-4 md:px-8 max-w-6xl mx-auto flex items-center justify-between">
                 <Link href="/" className="font-bold text-2xl tracking-tighter flex items-center gap-2 group">
-                    <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-primary-foreground group-hover:rotate-12 transition-transform">
-                        P
-                    </div>
+
                     <span>Portafolio<span className="text-primary/100"> Web</span></span>
                 </Link>
 
