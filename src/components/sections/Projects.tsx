@@ -109,7 +109,7 @@ export function Projects() {
                     onMouseLeave={handleMouseLeave}
                     onMouseUp={handleMouseUp}
                     onMouseMove={handleMouseMove}
-                    className={`flex overflow-x-auto gap-6 sm:gap-8 pb-8 projects-custom-scrollbar projects-grid cursor-grab active:cursor-grabbing px-4 md:px-8 lg:px-12 ${isDragging ? 'snap-none' : 'snap-x snap-mandatory'}`}
+                    className={`flex overflow-x-auto gap-6 sm:gap-8 pb-10 projects-custom-scrollbar projects-grid cursor-grab active:cursor-grabbing px-4 md:px-8 lg:px-12 touch-pan-x overscroll-x-contain ${isDragging ? 'snap-none' : 'snap-x snap-mandatory'}`}
                 >
                     {filteredProjects.map((project: Project) => (
                         <div key={project.id} className="project-card flex-none w-[85vw] sm:w-[400px] md:w-[450px] h-full flex flex-col group snap-center pointer-events-auto">

@@ -18,7 +18,15 @@ export function SmoothScrollProvider({ children }: { children: React.ReactNode }
     }, [])
 
     return (
-        <ReactLenis root options={{ lerp: 0.08, duration: 1.2, smoothWheel: true, syncTouch: true }}>
+        <ReactLenis root options={{
+            lerp: 0.12,
+            duration: 1.2,
+            smoothWheel: true,
+            // Deshabilitamos syncTouch para que el scroll en el móvil sea nativo y sin delay
+            syncTouch: false,
+            touchMultiplier: 1.5,
+            wheelMultiplier: 1,
+        }}>
             {children}
         </ReactLenis>
     )
