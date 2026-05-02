@@ -3,7 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { LanguageProvider } from "@/context/LanguageContext";
 import { SmoothScrollProvider } from "@/components/smooth-scroll";
-import { Background3D } from "@/components/Background3D";
+import { Background3DLoader } from "@/components/Background3DLoader";
 
 const fontInter = Inter({
   variable: "--font-inter",
@@ -32,7 +32,7 @@ export default function RootLayout({
       >
         <LanguageProvider>
           <SmoothScrollProvider>
-            <Background3D />
+            <Background3DLoader />
             {children}
           </SmoothScrollProvider>
         </LanguageProvider>

@@ -30,17 +30,12 @@ export function Hero() {
     useGSAP(() => {
         const tl = gsap.timeline({ defaults: { ease: "power3.out" } })
 
-        // Initialize elements as invisible to prevent flash
-        gsap.set(".hero-tag, .hero-title, .hero-headline, .hero-desc, .hero-buttons, .hero-image-mobile, .hero-image-desktop", { opacity: 0, y: 20 })
-        gsap.set(".hero-image-mobile, .hero-image-desktop", { scale: 0.9, y: 0 })
+        gsap.set(".hero-tag, .hero-headline, .hero-desc, .hero-buttons", { opacity: 0, y: 20 })
 
-        tl.to(".hero-tag", { opacity: 1, y: 0, duration: 0.8 })
-            .to(".hero-title", { opacity: 1, y: 0, duration: 0.8 }, "-=0.6")
-            .to(".hero-image-mobile", { opacity: 1, scale: 1, duration: 0.8, ease: "back.out(1.2)" }, "-=0.4")
-            .to(".hero-headline", { opacity: 1, y: 0, duration: 0.8 }, "-=0.6")
-            .to(".hero-desc", { opacity: 1, y: 0, duration: 0.8 }, "-=0.6")
-            .to(".hero-buttons", { opacity: 1, y: 0, duration: 0.8, stagger: 0.2 }, "-=0.6")
-            .to(".hero-image-desktop", { opacity: 1, x: 0, duration: 1 }, "-=1")
+        tl.to(".hero-tag", { opacity: 1, y: 0, duration: 0.6 }, 0.1)
+            .to(".hero-headline", { opacity: 1, y: 0, duration: 0.6 }, 0.25)
+            .to(".hero-desc", { opacity: 1, y: 0, duration: 0.6 }, 0.4)
+            .to(".hero-buttons", { opacity: 1, y: 0, duration: 0.6, stagger: 0.15 }, 0.55)
 
     }, { scope: containerRef })
 
@@ -59,12 +54,12 @@ export function Hero() {
                                 status: &quot;Ready for new challenges&quot;
                             </div>
 
-                            <h1 className="hero-title text-5xl md:text-7xl font-bold tracking-tight text-white leading-tight mb-4">
+                            <h1 className="hero-title text-5xl md:text-7xl font-bold tracking-tight text-white leading-tight mb-4 motion-safe:animate-hero-rise">
                                 Hola, soy {profile.name}
                             </h1>
 
                             {/* Image ONLY on mobile (between Name and Headline) */}
-                            <ProfileCard className="hero-image-mobile lg:hidden my-8" />
+                            <ProfileCard className="lg:hidden my-8 motion-safe:animate-hero-pop" />
 
                             <h2 className="hero-headline text-2xl md:text-3xl text-white font-medium">
                                 {profile.headline}
@@ -85,7 +80,7 @@ export function Hero() {
                     </div>
 
                     {/* Image ONLY on desktop (right side) */}
-                    <ProfileCard className="hero-image-desktop hidden lg:block relative mr-auto" />
+                    <ProfileCard className="hidden lg:block relative mr-auto motion-safe:animate-hero-pop" />
                 </div>
             </div>
         </section>

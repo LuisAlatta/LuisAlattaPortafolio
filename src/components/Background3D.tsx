@@ -87,23 +87,14 @@ function CrystalShape({ shape }: { shape: typeof crystalShapes[0] }) {
 }
 
 export function Background3D() {
-    const [isDesktop, setIsDesktop] = React.useState(false)
-
-    React.useEffect(() => {
-        const checkIsDesktop = () => {
-            setIsDesktop(window.innerWidth >= 768)
-        }
-
-        checkIsDesktop()
-        window.addEventListener("resize", checkIsDesktop)
-        return () => window.removeEventListener("resize", checkIsDesktop)
-    }, [])
-
-    if (!isDesktop) return null
-
     return (
         <div className="fixed inset-0 z-[-10] pointer-events-none">
-            <Canvas camera={{ position: [0, 0, 10], fov: 55 }}>
+            <Canvas
+                camera={{ position: [0, 0, 10], fov: 55 }}
+                dpr={[1, 1.5]}
+                gl={{ antialias: false, powerPreference: "high-performance" }}
+                frameloop="always"
+            >
                 <Environment preset="city" />
                 <ambientLight intensity={0.4} />
                 <directionalLight position={[10, 10, 5]} intensity={1.2} />
