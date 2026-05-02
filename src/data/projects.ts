@@ -49,7 +49,7 @@ export const projects: Project[] = [
         status: "Completado",
         demoUrl: "https://deuman.com",
         repoUrl: "",
-        imageUrl: "/images/projects/deuman.png",
+        imageUrl: "/images/projects/deuman.webp",
         featured: true,
         flag: "es"
     },
@@ -81,7 +81,7 @@ export const projects: Project[] = [
         status: "Completado",
         demoUrl: "https://proyectoceela.com",
         repoUrl: "",
-        imageUrl: "/images/projects/ceela.png",
+        imageUrl: "/images/projects/ceela.webp",
         featured: true,
         flag: "cl"
     },
@@ -113,7 +113,7 @@ export const projects: Project[] = [
         status: "Completado",
         demoUrl: "https://www.fixmantech.com",
         repoUrl: "",
-        imageUrl: "/images/projects/fixmantech.png",
+        imageUrl: "/images/projects/fixmantech.webp",
         featured: true,
         flag: "pe"
     },
@@ -145,7 +145,7 @@ export const projects: Project[] = [
         status: "Completado",
         demoUrl: "https://pedi-majes.vercel.app",
         repoUrl: "",
-        imageUrl: "/images/projects/peditodomajes.png",
+        imageUrl: "/images/projects/peditodomajes.webp",
         featured: true,
         flag: "pe"
     }

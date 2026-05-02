@@ -13,7 +13,7 @@ const ProfileCard = ({ className }: { className?: string }) => (
     <div className={className}>
         <div className="relative aspect-[3/5] max-h-[500px] md:max-h-[800px] w-full max-w-[280px] md:max-w-sm transition-all duration-700 transform-gpu hover:-translate-y-2 group [mask-image:radial-gradient(ellipse_at_center,black_58%,transparent_98%)]">
             <Image
-                src="/perfil.png"
+                src="/perfil.webp"
                 alt="Luis Alatta"
                 width={384}
                 height={640}
