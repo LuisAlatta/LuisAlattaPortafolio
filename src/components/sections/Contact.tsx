@@ -1,47 +1,13 @@
 "use client"
 import * as React from "react"
-import { useRef } from "react"
 import { profile } from "@/data/profile"
 import { MapPin, Mail, MessageCircle, ArrowRight } from "lucide-react"
-import gsap from "gsap"
-import { useGSAP } from "@gsap/react"
 import { useLanguage } from "@/context/LanguageContext"
+import { useRevealGroup } from "@/hooks/useReveal"
 
 export function Contact() {
-    const sectionRef = useRef<HTMLElement>(null)
+    const sectionRef = useRevealGroup<HTMLElement>()
     const { language } = useLanguage()
-
-    useGSAP(() => {
-        gsap.fromTo(".contact-header",
-            { opacity: 0, y: 30 },
-            {
-                opacity: 1,
-                y: 0,
-                duration: 0.8,
-                ease: "power2.out",
-                scrollTrigger: {
-                    trigger: ".contact-header",
-                    start: "top 80%",
-                }
-            }
-        )
-
-        gsap.fromTo(".contact-card",
-            { opacity: 0, scale: 0.9, y: 20 },
-            {
-                opacity: 1,
-                scale: 1,
-                y: 0,
-                duration: 0.8,
-                stagger: 0.15,
-                ease: "back.out(1.4)",
-                scrollTrigger: {
-                    trigger: ".contact-grid",
-                    start: "top 75%",
-                }
-            }
-        )
-    }, { scope: sectionRef })
 
     const contactMethods = [
         {
@@ -76,7 +42,7 @@ export function Contact() {
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/5 rounded-full blur-[120px] -z-10" />
 
             <div className="container px-4 md:px-8 max-w-5xl mx-auto">
-                <div className="contact-header mb-16 text-center opacity-0">
+                <div data-reveal className="reveal mb-16 text-center">
                     <h2 className="text-4xl md:text-5xl font-bold tracking-tight mb-6 text-white text-center">
                         {language === "es" ? "¡Hablemos de tu próximo proyecto!" : "Let's talk about your next project!"}
                     </h2>
@@ -87,14 +53,15 @@ export function Contact() {
                     </p>
                 </div>
 
-                <div className="contact-grid grid md:grid-cols-3 gap-6">
-                    {contactMethods.map((method) => (
+                <div className="grid md:grid-cols-3 gap-6">
+                    {contactMethods.map((method, i) => (
                         <a
                             key={method.title}
                             href={method.link}
                             target={method.link.startsWith("http") ? "_blank" : undefined}
                             rel={method.link.startsWith("http") ? "noreferrer" : undefined}
-                            className="contact-card opacity-0 glass-panel p-8 rounded-3xl flex flex-col items-center text-center group hover:-translate-y-2 transition-all duration-500 hover:shadow-2xl hover:shadow-primary/10 border border-white/5 hover:border-white/20"
+                            data-reveal
+                            className={`reveal reveal-delay-${i + 1} glass-panel p-8 rounded-3xl flex flex-col items-center text-center group hover:-translate-y-2 transition-all duration-500 hover:shadow-2xl hover:shadow-primary/10 border border-white/5 hover:border-white/20`}
                         >
                             <div
                                 className="w-16 h-16 rounded-2xl flex items-center justify-center mb-6 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-6 shadow-lg"

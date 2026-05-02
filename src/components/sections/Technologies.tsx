@@ -1,8 +1,6 @@
 "use client"
 import * as React from "react"
-import { useRef } from "react"
-import gsap from "gsap"
-import { useGSAP } from "@gsap/react"
+import { useReveal } from "@/hooks/useReveal"
 import {
     SiHtml5, SiCss3, SiJavascript, SiTypescript, SiReact, SiNextdotjs, SiTailwindcss,
     SiVuedotjs, SiAngular, SiRedux,
@@ -112,31 +110,13 @@ const TechCard = ({ item }: { item: { name: string, Icon: IconType, color: strin
 )
 
 export function Technologies() {
-    const sectionRef = useRef<HTMLElement>(null)
+    const headerRef = useReveal<HTMLDivElement>()
     const { language } = useLanguage()
 
-    useGSAP(() => {
-        gsap.fromTo(".tech-header",
-            { opacity: 0, y: 30 },
-            {
-                opacity: 1,
-                y: 0,
-                duration: 0.8,
-                ease: "power2.out",
-                scrollTrigger: {
-                    trigger: ".tech-header",
-                    start: "top 80%",
-                }
-            }
-        )
-        // Note: Floating animations on GSAP for cards got removed because 
-        // they conflict with the CSS linear infinite translation of the marquee.
-    }, { scope: sectionRef })
-
     return (
-        <section ref={sectionRef} id="tech" className="py-16 relative overflow-hidden">
+        <section id="tech" className="py-16 relative overflow-hidden">
             <div className="container px-4 md:px-8 max-w-6xl mx-auto z-20 relative">
-                <div className="tech-header mb-16 opacity-0 text-center">
+                <div ref={headerRef} className="reveal mb-16 text-center">
                     <h2 className="text-4xl md:text-5xl font-bold tracking-tight mb-6">
                         {language === "es" ? "Stack Tecnológico" : "Tech Stack"}
                     </h2>

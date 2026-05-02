@@ -1,11 +1,10 @@
 "use client"
 import * as React from "react"
-import { useRef, useState } from "react"
+import { useState } from "react"
 import { profile } from "@/data/profile"
-import gsap from "gsap"
-import { useGSAP } from "@gsap/react"
 import { Code2, PenTool, Rocket, Heart, ArrowRight, GraduationCap, Briefcase } from "lucide-react"
 import { useLanguage } from "@/context/LanguageContext"
+import { useRevealGroup } from "@/hooks/useReveal"
 
 const stats = [
     { value: "+2", label: { es: "Años de Experiencia", en: "Years of Experience" }, color: "#61DAFB", bg: "#61DAFB15" },
@@ -60,44 +59,9 @@ const highlights = [
 ]
 
 export function About() {
-    const sectionRef = useRef<HTMLElement>(null)
+    const sectionRef = useRevealGroup<HTMLElement>()
     const { language } = useLanguage()
     const [activeCard, setActiveCard] = useState<number | null>(null)
-
-    useGSAP(() => {
-        gsap.fromTo(".about-badge",
-            { opacity: 0, y: 20, scale: 0.9 },
-            { opacity: 1, y: 0, scale: 1, duration: 0.6, ease: "back.out(1.7)", scrollTrigger: { trigger: ".about-badge", start: "top 85%" } }
-        )
-        gsap.fromTo(".about-title",
-            { opacity: 0, y: 40 },
-            { opacity: 1, y: 0, duration: 1, ease: "power3.out", scrollTrigger: { trigger: ".about-title", start: "top 80%" } }
-        )
-        gsap.fromTo(".about-desc",
-            { opacity: 0, y: 20 },
-            { opacity: 1, y: 0, duration: 0.8, delay: 0.2, ease: "power2.out", scrollTrigger: { trigger: ".about-desc", start: "top 82%" } }
-        )
-        gsap.fromTo(".about-stat",
-            { opacity: 0, y: 40, scale: 0.8 },
-            {
-                opacity: 1, y: 0, scale: 1,
-                duration: 0.7, stagger: 0.12, ease: "back.out(1.5)",
-                scrollTrigger: { trigger: ".about-stats-row", start: "top 85%" }
-            }
-        )
-        gsap.fromTo(".about-highlight",
-            { opacity: 0, y: 30 },
-            {
-                opacity: 1, y: 0,
-                duration: 0.6, stagger: 0.1, ease: "power2.out",
-                scrollTrigger: { trigger: ".about-highlights-grid", start: "top 85%" }
-            }
-        )
-        gsap.fromTo(".about-cta",
-            { opacity: 0, y: 20 },
-            { opacity: 1, y: 0, duration: 0.8, ease: "power2.out", scrollTrigger: { trigger: ".about-cta", start: "top 90%" } }
-        )
-    }, { scope: sectionRef })
 
     return (
         <section ref={sectionRef} id="about" className="py-16 relative overflow-hidden">
@@ -109,13 +73,10 @@ export function About() {
 
                 {/* Header — Centered, full-width */}
                 <div className="text-center mb-20">
-                    <div className="about-badge opacity-0 inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-semibold font-mono mb-6 text-primary">
-
-                    </div>
-                    <h2 className="about-title opacity-0 text-4xl md:text-6xl font-bold tracking-tight mb-8 leading-tight text-white">
+                    <h2 data-reveal className="reveal text-4xl md:text-6xl font-bold tracking-tight mb-8 leading-tight text-white">
                         {language === "es" ? "Sobre mí" : "About me"}
                     </h2>
-                    <div className="about-desc opacity-0 max-w-3xl mx-auto">
+                    <div data-reveal className="reveal reveal-delay-1 max-w-3xl mx-auto">
                         <p className="text-xl text-white leading-relaxed">
                             {language === "es"
                                 ? profile.about
@@ -125,11 +86,12 @@ export function About() {
                 </div>
 
                 {/* Stats Row */}
-                <div className="about-stats-row grid grid-cols-2 lg:grid-cols-4 gap-5 mb-24">
-                    {stats.map((stat) => (
+                <div className="grid grid-cols-2 lg:grid-cols-4 gap-5 mb-24">
+                    {stats.map((stat, i) => (
                         <div
                             key={stat.value}
-                            className="about-stat opacity-0 relative glass-panel rounded-3xl p-7 text-center group cursor-default overflow-hidden transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl"
+                            data-reveal
+                            className={`reveal reveal-delay-${Math.min(i + 1, 4)} relative glass-panel rounded-3xl p-7 text-center group cursor-default overflow-hidden transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl`}
                             style={{ boxShadow: `0 0 0 0 ${stat.color}` }}
                             onMouseEnter={e => {
                                 (e.currentTarget as HTMLElement).style.boxShadow = `0 0 40px 0 ${stat.color}25`
@@ -162,11 +124,12 @@ export function About() {
                 </div>
 
                 {/* Highlights Grid */}
-                <div className="about-highlights-grid grid md:grid-cols-2 lg:grid-cols-3 gap-5 mb-20">
+                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5 mb-20">
                     {highlights.map((item, i) => (
                         <div
                             key={item.title.es}
-                            className={`about-highlight opacity-0 relative glass-panel rounded-3xl p-7 cursor-default overflow-hidden transition-all duration-500 hover:-translate-y-2 group`}
+                            data-reveal
+                            className={`reveal reveal-delay-${Math.min(i + 1, 6)} relative glass-panel rounded-3xl p-7 cursor-default overflow-hidden transition-all duration-500 hover:-translate-y-2 group`}
                             onMouseEnter={() => setActiveCard(i)}
                             onMouseLeave={() => setActiveCard(null)}
                             style={{
@@ -213,7 +176,7 @@ export function About() {
                 </div>
 
                 {/* CTA */}
-                <div className="about-cta opacity-0 text-center">
+                <div data-reveal className="reveal text-center">
                     <a
                         href="#contact"
                         className="inline-flex items-center gap-3 px-10 py-5 rounded-full text-base font-bold group transition-all duration-500 relative overflow-hidden"

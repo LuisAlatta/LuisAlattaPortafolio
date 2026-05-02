@@ -2,12 +2,6 @@
 
 import React, { useEffect, useState } from "react"
 import { ReactLenis } from "lenis/react"
-import gsap from "gsap"
-import { ScrollTrigger } from "gsap/ScrollTrigger"
-
-if (typeof window !== "undefined") {
-    gsap.registerPlugin(ScrollTrigger)
-}
 
 export function SmoothScrollProvider({ children }: { children: React.ReactNode }) {
     const [enableLenis, setEnableLenis] = useState(false)
@@ -16,10 +10,6 @@ export function SmoothScrollProvider({ children }: { children: React.ReactNode }
         const isDesktop = window.matchMedia("(min-width: 1024px) and (pointer: fine)").matches
         const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches
         setEnableLenis(isDesktop && !reduceMotion)
-
-        if (typeof window !== "undefined") {
-            ScrollTrigger.refresh()
-        }
     }, [])
 
     if (!enableLenis) return <>{children}</>

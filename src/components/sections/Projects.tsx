@@ -1,19 +1,17 @@
 "use client"
 import * as React from "react"
-import { useRef, useEffect } from "react"
+import { useRef } from "react"
 import { projects, Project } from "@/data/projects"
 import { Card, CardContent, CardFooter } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import Image from "next/image"
 import { Code, ExternalLink } from "lucide-react"
-import gsap from "gsap"
-import { useGSAP } from "@gsap/react"
-import { ScrollTrigger } from "gsap/ScrollTrigger"
+import { useReveal } from "@/hooks/useReveal"
 
 export function Projects() {
     const [filter, setFilter] = React.useState<string>("Todos")
-    const sectionRef = useRef<HTMLElement>(null)
+    const headerRef = useReveal<HTMLDivElement>()
     const carouselRef = useRef<HTMLDivElement>(null)
     const [isDragging, setIsDragging] = React.useState(false)
     const [startX, setStartX] = React.useState(0)
@@ -45,36 +43,10 @@ export function Projects() {
     const categories = ["Todos", "Móvil", "Full Stack", "Corporativo"]
     const filteredProjects = projects.filter(p => filter === "Todos" ? true : p.category.includes(filter))
 
-    useGSAP(() => {
-        gsap.fromTo(".projects-header",
-            { opacity: 0, y: 30 },
-            {
-                opacity: 1,
-                y: 0,
-                duration: 0.8,
-                ease: "power2.out",
-                scrollTrigger: {
-                    trigger: ".projects-header",
-                    start: "top 80%",
-                }
-            }
-        )
-    }, { scope: sectionRef })
-
-    useEffect(() => {
-        // Animate projects when filter changes
-        gsap.fromTo(".project-card",
-            { opacity: 0, scale: 0.95 },
-            { opacity: 1, scale: 1, duration: 0.4, stagger: 0.1, ease: "power2.out", clearProps: "all" }
-        )
-        // Refresh ScrollTrigger since layout might change height
-        ScrollTrigger.refresh()
-    }, [filter])
-
     return (
-        <section ref={sectionRef} id="projects" className="py-16 w-full overflow-hidden">
+        <section id="projects" className="py-16 w-full overflow-hidden">
             <div className="container px-4 md:px-8 max-w-6xl mx-auto">
-                <div className="projects-header mb-12 opacity-0 text-center">
+                <div ref={headerRef} className="reveal mb-12 text-center">
                     <div className="flex flex-col items-center gap-6 mb-8">
                         <div>
                             <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4 text-white">Proyectos Destacados</h2>
@@ -112,7 +84,7 @@ export function Projects() {
                     className={`flex overflow-x-auto gap-6 sm:gap-8 pb-10 projects-custom-scrollbar projects-grid cursor-grab active:cursor-grabbing px-4 md:px-8 lg:px-12 touch-pan-x overscroll-x-contain ${isDragging ? 'snap-none' : 'snap-x snap-mandatory'}`}
                 >
                     {filteredProjects.map((project: Project) => (
-                        <div key={project.id} className="project-card flex-none w-[85vw] sm:w-[400px] md:w-[450px] h-full flex flex-col group snap-center pointer-events-auto">
+                        <div key={`${filter}-${project.id}`} className="motion-safe:animate-hero-pop flex-none w-[85vw] sm:w-[400px] md:w-[450px] h-full flex flex-col group snap-center pointer-events-auto">
                             <Card className="h-full overflow-hidden flex flex-col glass-panel hover:border-primary/40 transition-all duration-500 hover:shadow-xl hover:shadow-primary/5 select-none">
                                 <div className="relative h-64 overflow-hidden bg-muted">
                                     <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/20 to-transparent z-10" />

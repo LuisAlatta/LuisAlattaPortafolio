@@ -1,11 +1,9 @@
 "use client"
 import * as React from "react"
-import { useRef } from "react"
 import { timeline } from "@/data/timeline"
 import { GraduationCap, Code2, Briefcase, Rocket, Calendar, Tag } from "lucide-react"
-import gsap from "gsap"
-import { useGSAP } from "@gsap/react"
 import { useLanguage } from "@/context/LanguageContext"
+import { useRevealGroup } from "@/hooks/useReveal"
 
 const iconMap = {
     education: GraduationCap,
@@ -21,43 +19,8 @@ const typeLabel = {
 }
 
 export function Timeline() {
-    const sectionRef = useRef<HTMLElement>(null)
+    const sectionRef = useRevealGroup<HTMLElement>()
     const { language } = useLanguage()
-
-    useGSAP(() => {
-        gsap.fromTo(".timeline-header",
-            { opacity: 0, y: 40 },
-            {
-                opacity: 1, y: 0, duration: 1, ease: "power3.out",
-                scrollTrigger: { trigger: ".timeline-header", start: "top 80%" }
-            }
-        )
-
-        // Animate the vertical line growing
-        gsap.fromTo(".timeline-line",
-            { scaleY: 0, transformOrigin: "top center" },
-            {
-                scaleY: 1,
-                duration: 1.5,
-                ease: "power2.out",
-                scrollTrigger: { trigger: ".timeline-line", start: "top 75%", end: "bottom 20%", scrub: 1 }
-            }
-        )
-
-        const items = gsap.utils.toArray(".timeline-item") as HTMLElement[]
-        items.forEach((item, i) => {
-            const isEven = i % 2 === 0
-            gsap.fromTo(item,
-                { opacity: 0, x: isEven ? -40 : 40, y: 10 },
-                {
-                    opacity: 1, x: 0, y: 0,
-                    duration: 0.7,
-                    ease: "power2.out",
-                    scrollTrigger: { trigger: item, start: "top 88%" }
-                }
-            )
-        })
-    }, { scope: sectionRef })
 
     return (
         <section ref={sectionRef} id="timeline" className="py-32 relative overflow-hidden">
@@ -67,7 +30,7 @@ export function Timeline() {
             <div className="container px-4 md:px-8 max-w-5xl mx-auto">
 
                 {/* Header */}
-                <div className="timeline-header mb-20 text-center opacity-0">
+                <div data-reveal className="reveal mb-20 text-center">
                     <div className="inline-flex items-center gap-2 glass-panel px-4 py-2 rounded-full text-xs font-semibold font-mono mb-6 text-primary">
                         <Calendar className="w-3.5 h-3.5" />
                         {language === "es" ? "Mi Recorrido" : "My Journey"}
@@ -97,7 +60,8 @@ export function Timeline() {
                             return (
                                 <div
                                     key={item.id}
-                                    className={`timeline-item relative flex flex-col md:flex-row items-start md:items-center gap-6 md:gap-0 opacity-0`}
+                                    data-reveal
+                                    className="reveal relative flex flex-col md:flex-row items-start md:items-center gap-6 md:gap-0"
                                 >
                                     {/* LEFT content (only on even - desktop) */}
                                     <div className={`w-full md:w-1/2 md:pr-16 ${isEven ? "md:text-right" : "md:order-3 md:pl-16 md:pr-0 md:text-left"}`}>
