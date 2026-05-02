@@ -5,7 +5,6 @@ import { Technologies } from "@/components/sections/Technologies"
 import { Projects } from "@/components/sections/Projects"
 import { Contact } from "@/components/sections/Contact"
 import { Footer } from "@/components/sections/Footer"
-import { Toaster } from "sonner"
 
 export default function Home() {
   return (
@@ -17,7 +16,6 @@ export default function Home() {
       <Projects />
       <Contact />
       <Footer />
-      <Toaster position="bottom-right" theme="system" />
     </main>
   )
 }

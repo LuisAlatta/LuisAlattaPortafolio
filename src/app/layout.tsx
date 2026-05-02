@@ -1,14 +1,7 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import "./globals.css";
 import { LanguageProvider } from "@/context/LanguageContext";
-import { SmoothScrollProvider } from "@/components/smooth-scroll";
 import { Background3DLoader } from "@/components/Background3DLoader";
-
-const fontInter = Inter({
-  variable: "--font-inter",
-  subsets: ["latin"],
-});
 
 export const metadata: Metadata = {
   title: "Luis Alatta | Portafolio Profesional",
@@ -27,14 +20,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es" suppressHydrationWarning className="dark">
-      <body
-        className={`${fontInter.variable} font-sans antialiased`}
-      >
+      <head>
+        <link rel="preconnect" href="https://flagcdn.com" crossOrigin="" />
+        <link rel="dns-prefetch" href="https://flagcdn.com" />
+      </head>
+      <body className="font-sans antialiased">
         <LanguageProvider>
-          <SmoothScrollProvider>
-            <Background3DLoader />
-            {children}
-          </SmoothScrollProvider>
+          <Background3DLoader />
+          {children}
         </LanguageProvider>
       </body>
     </html>
