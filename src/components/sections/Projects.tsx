@@ -136,7 +136,9 @@ export function Projects() {
 
                     {/* Dock */}
                     <div className="absolute bottom-4 inset-x-0 z-30 flex justify-center px-4">
-                        <div className="flex items-end gap-2 sm:gap-2.5 px-3 py-2.5 rounded-2xl bg-white/10 backdrop-blur-2xl border border-white/15 shadow-2xl max-w-full overflow-x-auto scrollbar-none">
+                        {/* Caja con headroom para que la magnificación no se recorte */}
+                        <div className="max-w-full overflow-x-auto overflow-y-visible scrollbar-none pt-16">
+                        <div className="flex items-end gap-2 sm:gap-2.5 px-3 py-2.5 rounded-2xl bg-white/10 backdrop-blur-2xl border border-white/15 shadow-2xl w-max mx-auto">
                             {projects.map((project) => {
                                 const isActive = active?.id === project.id
                                 return (
@@ -160,6 +162,7 @@ export function Projects() {
                                     </button>
                                 )
                             })}
+                        </div>
                         </div>
                     </div>
                 </div>
