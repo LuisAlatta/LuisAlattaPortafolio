@@ -6,7 +6,8 @@ import { Card, CardContent, CardFooter } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import Image from "next/image"
-import { Code, ExternalLink } from "lucide-react"
+import Link from "next/link"
+import { Code, ExternalLink, ArrowRight } from "lucide-react"
 import { useReveal } from "@/hooks/useReveal"
 
 export function Projects() {
@@ -121,7 +122,9 @@ export function Projects() {
                                 </div>
 
                                 <CardContent className="relative z-20 p-6 flex-grow">
-                                    <h3 className="text-2xl font-bold mb-2 group-hover:text-primary transition-colors">{project.title}</h3>
+                                    <Link href={`/proyectos/${project.slug}`} className="inline-block" draggable={false}>
+                                        <h3 className="text-2xl font-bold mb-2 group-hover:text-primary transition-colors">{project.title}</h3>
+                                    </Link>
                                     <p className="text-muted-foreground mb-6 line-clamp-3">
                                         {project.shortDescription}
                                     </p>
@@ -137,19 +140,26 @@ export function Projects() {
                                     </div>
                                 </CardContent>
 
-                                <CardFooter className="p-6 pt-0 flex gap-4 mt-auto">
-                                    <Button className="w-full" asChild>
-                                        <a href={project.demoUrl} target="_blank" rel="noreferrer">
-                                            <ExternalLink className="mr-2 h-4 w-4" /> Demo
-                                        </a>
+                                <CardFooter className="p-6 pt-0 flex flex-col gap-3 mt-auto">
+                                    <Button variant="secondary" className="w-full" asChild>
+                                        <Link href={`/proyectos/${project.slug}`} draggable={false}>
+                                            Ver caso de estudio <ArrowRight className="ml-2 h-4 w-4" />
+                                        </Link>
                                     </Button>
-                                    {project.repoUrl && (
-                                        <Button variant="outline" className="w-full font-mono text-xs" asChild>
-                                            <a href={project.repoUrl} target="_blank" rel="noreferrer">
-                                                <Code className="mr-2 h-4 w-4" /> view_source
+                                    <div className="flex w-full gap-3">
+                                        <Button className="w-full" asChild>
+                                            <a href={project.demoUrl} target="_blank" rel="noreferrer">
+                                                <ExternalLink className="mr-2 h-4 w-4" /> Demo
                                             </a>
                                         </Button>
-                                    )}
+                                        {project.repoUrl && (
+                                            <Button variant="outline" className="w-full font-mono text-xs" asChild>
+                                                <a href={project.repoUrl} target="_blank" rel="noreferrer">
+                                                    <Code className="mr-2 h-4 w-4" /> view_source
+                                                </a>
+                                            </Button>
+                                        )}
+                                    </div>
                                 </CardFooter>
                             </Card>
                         </div>

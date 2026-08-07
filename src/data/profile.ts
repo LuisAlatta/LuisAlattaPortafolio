@@ -1,3 +1,6 @@
+// TODO: confirmar el dominio final de producción (usado en SEO, sitemap y OpenGraph)
+export const siteUrl = "https://luisalatta.com"
+
 export const profile = {
     name: "Luis Alatta",
     fullName: "Luis Fernando Alatta Torres",
