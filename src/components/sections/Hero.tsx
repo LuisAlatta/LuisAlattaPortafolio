@@ -1,6 +1,6 @@
 "use client"
 import * as React from "react"
-import { ArrowRight, Terminal, MessageCircle } from "lucide-react"
+import { ArrowRight, Terminal, MessageCircle, Download } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { profile } from "@/data/profile"
 import Link from "next/link"
@@ -62,6 +62,11 @@ export function Hero() {
                                 <Link href="#contact">
                                     <MessageCircle className="mr-2 h-4 w-4" /> Contactar
                                 </Link>
+                            </Button>
+                            <Button size="lg" variant="outline" className="rounded-full h-12 px-8" asChild>
+                                <a href="/cv-luis-alatta.pdf" download>
+                                    <Download className="mr-2 h-4 w-4" /> Descargar CV
+                                </a>
                             </Button>
                         </div>
                     </div>
