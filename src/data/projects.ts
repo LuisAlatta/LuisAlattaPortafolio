@@ -353,39 +353,6 @@ export const projects: Project[] = [
         flag: "pe"
     },
     {
-        id: "13",
-        slug: "aset-witch",
-        title: "Aset Witch",
-        shortDescription: "Landing mística y elegante para tarotista y sanadora holística, con agendamiento vía WhatsApp.",
-        fullDescription: "Sitio de una página para Aset Witch, marca personal de lectura de tarot y sanación holística, construido con Next.js y React. Presenta un diseño premium con tipografías serif, fondo animado y transiciones con Framer Motion, y estructura los servicios en modales de detalle que derivan al agendamiento por WhatsApp.",
-        category: "Web",
-        role: "Desarrollador Frontend",
-        industry: "Servicios holísticos / Bienestar",
-        technologies: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Framer Motion"],
-        platform: "Web",
-        features: [
-            "Hero animado y fondo decorativo con Framer Motion",
-            "Catálogo de servicios con modales de detalle",
-            "CTA de agendamiento integrado con WhatsApp",
-            "Secciones de proceso de reserva y testimonios"
-        ],
-        challenges: [
-            "Lograr una estética premium sin caer en clichés visuales del nicho esotérico.",
-            "Mantener buen rendimiento con animaciones ricas sobre React 19."
-        ],
-        outcomes: [
-            "Presencia digital diferenciada que transmite exclusividad y confianza.",
-            "Flujo de conversión directo a WhatsApp que reduce la fricción para agendar."
-        ],
-        status: "Completado",
-        demoUrl: "",
-        repoUrl: "",
-        imageUrl: "",
-        accent: "#9333ea",
-        featured: false,
-        flag: "pe"
-    },
-    {
         id: "14",
         slug: "amerandu",
         title: "Amerandú",
@@ -450,39 +417,6 @@ export const projects: Project[] = [
         accent: "#65a30d",
         featured: false,
         flag: "pe"
-    },
-    {
-        id: "16",
-        slug: "caminos-del-sabor",
-        title: "Los Caminos del Sabor",
-        shortDescription: "Landing pixel-art de un videojuego de aventura por la gastronomía arequipeña.",
-        fullDescription: "Sitio estático hecho con Astro que presenta un juego de aventura pixel-art ambientado en Arequipa, Perú. Secciones de historia, mundo, personajes, características, galería y descarga, con iconografía pixel-art y enfoque en difusión del tráiler y las plataformas objetivo.",
-        category: "Web",
-        role: "Desarrollador Web",
-        industry: "Videojuegos / Entretenimiento",
-        technologies: ["Astro", "astro-icon", "HTML", "CSS"],
-        platform: "Web (estático)",
-        features: [
-            "Hero temático de aventura pixel-art",
-            "Secciones de historia, mundo y personajes",
-            "Galería y sección de descarga con plataformas objetivo",
-            "Identidad visual pixel-art consistente"
-        ],
-        challenges: [
-            "Lograr una estética pixel-art coherente y fluida en web con solo iconos y CSS.",
-            "Estructurar una landing de conversión atractiva para un juego aún sin lanzar."
-        ],
-        outcomes: [
-            "Landing promocional ligera y de carga rápida como sitio estático.",
-            "Identidad visual pixel-art consistente lista para difundir el juego."
-        ],
-        status: "Completado",
-        demoUrl: "",
-        repoUrl: "",
-        imageUrl: "",
-        accent: "#db2777",
-        featured: false,
-        flag: "pe"
     }
 ];
 
@@ -499,8 +433,6 @@ export const projectIcons: Record<string, string> = {
     "nexia-2026": "/images/projects/icons/nexia-2026.svg",
     "expedikids": "/images/projects/icons/expedikids.png",
     "pidetodomajes": "/images/projects/icons/pidetodomajes.png",
-    "aset-witch": "/images/projects/icons/aset-witch.png",
     "amerandu": "/images/projects/icons/amerandu.png",
     "habilab": "/images/projects/icons/habilab.png",
-    "caminos-del-sabor": "/images/projects/icons/caminos-del-sabor.png",
 };
