@@ -15,7 +15,7 @@ export function Footer() {
             {/* Subtle top border illumination */}
             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[1px] bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
 
-            <div className="w-full px-4 md:px-8 lg:px-12">
+            <div className="w-full px-6 md:px-12 lg:px-20 xl:px-28">
                 <div className="flex flex-col md:flex-row justify-between items-center gap-10 md:gap-4">
 
                     {/* Brand Section */}

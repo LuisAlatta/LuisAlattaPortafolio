@@ -41,7 +41,7 @@ export function Contact() {
             {/* Background elements */}
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/5 rounded-full blur-[120px] -z-10" />
 
-            <div className="w-full px-4 md:px-8 lg:px-12">
+            <div className="w-full px-6 md:px-12 lg:px-20 xl:px-28">
                 <div data-reveal className="reveal mb-16 text-center">
                     <h2 className="text-4xl md:text-5xl font-bold tracking-tight mb-6 text-white text-center">
                         {language === "es" ? "¡Hablemos de tu próximo proyecto!" : "Let's talk about your next project!"}

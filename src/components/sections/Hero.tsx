@@ -27,7 +27,7 @@ export function Hero() {
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-primary/5 dark:bg-primary/10 rounded-full blur-[100px] -z-10" />
             <div className="absolute inset-0 bg-background [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)] pointer-events-none" />
 
-            <div className="w-full px-4 md:px-8 lg:px-12 relative z-10">
+            <div className="w-full px-6 md:px-12 lg:px-20 xl:px-28 relative z-10">
                 <div className="grid lg:grid-cols-2 gap-20 items-center">
                     <div className="flex flex-col gap-6 w-full">
                         <div>

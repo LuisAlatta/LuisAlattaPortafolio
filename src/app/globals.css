@@ -171,6 +171,17 @@
     animation-delay: 0.1s;
   }
 
+  /* macOS-style app window open/close */
+  .animate-app-open {
+    transform-origin: var(--app-origin-x, 50%) bottom;
+    animation: app-open 0.42s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  .animate-app-close {
+    transform-origin: var(--app-origin-x, 50%) bottom;
+    animation: app-close 0.28s cubic-bezier(0.4, 0, 1, 1) both;
+  }
+
   .reveal {
     opacity: 0;
     transform: translate3d(0, 24px, 0);
@@ -280,5 +291,33 @@
   100% {
     opacity: 1;
     transform: scale(1);
+  }
+}
+
+@keyframes app-open {
+  0% {
+    opacity: 0;
+    transform: translateY(60px) scale(0.4);
+  }
+
+  60% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes app-close {
+  0% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateY(60px) scale(0.4);
   }
 }
