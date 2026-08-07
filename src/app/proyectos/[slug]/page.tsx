@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import Image from "next/image";
 import {
   ArrowLeft,
   ExternalLink,
@@ -17,6 +16,7 @@ import { projects } from "@/data/projects";
 import { siteUrl } from "@/data/profile";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { ProjectThumb } from "@/components/ui/project-thumb";
 import { Navbar } from "@/components/sections/Navbar";
 import { Footer } from "@/components/sections/Footer";
 
@@ -135,25 +135,28 @@ export default async function ProjectDetailPage({
           </div>
 
           {/* Cover image */}
-          <div className="relative rounded-3xl overflow-hidden glass-panel mb-10">
-            <Image
-              src={project.imageUrl}
-              alt={project.title}
+          <div className="relative rounded-3xl overflow-hidden glass-panel mb-10 aspect-[1200/630]">
+            <ProjectThumb
+              project={project}
               width={1200}
               height={630}
-              className="w-full h-auto object-cover"
+              className="w-full h-full object-cover"
               priority
             />
           </div>
 
           {/* CTA buttons */}
-          <div className="flex flex-wrap gap-4 mb-12">
-            {project.demoUrl && (
+          <div className="flex flex-wrap items-center gap-4 mb-12">
+            {project.demoUrl ? (
               <Button size="lg" className="rounded-full" asChild>
                 <a href={project.demoUrl} target="_blank" rel="noreferrer">
                   <ExternalLink className="mr-2 h-4 w-4" /> Ver sitio en vivo
                 </a>
               </Button>
+            ) : (
+              <span className="inline-flex items-center gap-2 text-sm text-muted-foreground glass-panel rounded-full px-4 py-2">
+                Demo privada · disponible bajo solicitud
+              </span>
             )}
             {project.repoUrl && (
               <Button size="lg" variant="outline" className="rounded-full" asChild>

@@ -1,5 +1,5 @@
-// TODO: confirmar el dominio final de producción (usado en SEO, sitemap y OpenGraph)
-export const siteUrl = "https://luisalatta.com"
+// Dominio de producción (Vercel) usado en SEO, sitemap y OpenGraph
+export const siteUrl = "https://portafolio-luis-alatta.vercel.app"
 
 export const profile = {
     name: "Luis Alatta",

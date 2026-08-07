@@ -8,7 +8,7 @@ import { useRevealGroup } from "@/hooks/useReveal"
 
 const stats = [
     { value: "+2", label: { es: "Años de Experiencia", en: "Years of Experience" }, color: "#61DAFB", bg: "#61DAFB15" },
-    { value: "+12", label: { es: "Proyectos Completados", en: "Projects Completed" }, color: "#3ECF8E", bg: "#3ECF8E15" },
+    { value: "+18", label: { es: "Proyectos Realizados", en: "Projects Delivered" }, color: "#3ECF8E", bg: "#3ECF8E15" },
     { value: "+10", label: { es: "Tecnologías de Vanguardia", en: "Active Technologies" }, color: "#b561d6ff", bg: "#9B59B615" },
     { value: "100%", label: { es: "Orientado a Resultados", en: "Results-Oriented" }, color: "#e6825aff", bg: "#F7DF1E15" },
 ]

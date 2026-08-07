@@ -5,6 +5,7 @@ import { projects, Project } from "@/data/projects"
 import { Card, CardContent, CardFooter } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
+import { ProjectThumb } from "@/components/ui/project-thumb"
 import Image from "next/image"
 import Link from "next/link"
 import { Code, ExternalLink, ArrowRight } from "lucide-react"
@@ -41,7 +42,7 @@ export function Projects() {
         carouselRef.current.scrollLeft = scrollLeft - walk
     }
 
-    const categories = ["Todos", "Móvil", "Full Stack", "Corporativo"]
+    const categories = ["Todos", "Web", "Full Stack", "Corporativo", "Móvil"]
     const filteredProjects = projects.filter(p => filter === "Todos" ? true : p.category.includes(filter))
 
     return (
@@ -90,9 +91,8 @@ export function Projects() {
                                 <div className="relative h-64 overflow-hidden bg-muted">
                                     <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/20 to-transparent z-10" />
                                     <div className="w-full h-full overflow-hidden">
-                                        <Image
-                                            src={project.imageUrl}
-                                            alt={project.title}
+                                        <ProjectThumb
+                                            project={project}
                                             width={450}
                                             height={256}
                                             className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
@@ -141,25 +141,29 @@ export function Projects() {
                                 </CardContent>
 
                                 <CardFooter className="p-6 pt-0 flex flex-col gap-3 mt-auto">
-                                    <Button variant="secondary" className="w-full" asChild>
+                                    <Button className="w-full" asChild>
                                         <Link href={`/proyectos/${project.slug}`} draggable={false}>
                                             Ver caso de estudio <ArrowRight className="ml-2 h-4 w-4" />
                                         </Link>
                                     </Button>
-                                    <div className="flex w-full gap-3">
-                                        <Button className="w-full" asChild>
-                                            <a href={project.demoUrl} target="_blank" rel="noreferrer">
-                                                <ExternalLink className="mr-2 h-4 w-4" /> Demo
-                                            </a>
-                                        </Button>
-                                        {project.repoUrl && (
-                                            <Button variant="outline" className="w-full font-mono text-xs" asChild>
-                                                <a href={project.repoUrl} target="_blank" rel="noreferrer">
-                                                    <Code className="mr-2 h-4 w-4" /> view_source
-                                                </a>
-                                            </Button>
-                                        )}
-                                    </div>
+                                    {(project.demoUrl || project.repoUrl) && (
+                                        <div className="flex w-full gap-3">
+                                            {project.demoUrl && (
+                                                <Button variant="outline" className="w-full" asChild>
+                                                    <a href={project.demoUrl} target="_blank" rel="noreferrer">
+                                                        <ExternalLink className="mr-2 h-4 w-4" /> Demo
+                                                    </a>
+                                                </Button>
+                                            )}
+                                            {project.repoUrl && (
+                                                <Button variant="outline" className="w-full font-mono text-xs" asChild>
+                                                    <a href={project.repoUrl} target="_blank" rel="noreferrer">
+                                                        <Code className="mr-2 h-4 w-4" /> view_source
+                                                    </a>
+                                                </Button>
+                                            )}
+                                        </div>
+                                    )}
                                 </CardFooter>
                             </Card>
                         </div>
