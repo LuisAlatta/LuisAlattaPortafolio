@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { LanguageProvider } from "@/context/LanguageContext";
-import { Background3DLoader } from "@/components/Background3DLoader";
 import { profile, siteUrl } from "@/data/profile";
 
 const title = "Luis Alatta | Desarrollador Full Stack";
@@ -89,7 +88,6 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
         />
         <LanguageProvider>
-          <Background3DLoader />
           {children}
         </LanguageProvider>
       </body>

@@ -584,3 +584,24 @@ export const projects: Project[] = [
         flag: "pe"
     }
 ];
+
+// Icono/logo representativo de cada proyecto (app-style). Si un slug no está aquí,
+// la UI usa un monograma con el color de acento del proyecto.
+export const projectIcons: Record<string, string> = {
+    "motomajes": "/images/projects/icons/motomajes.png",
+    "marca-peruana": "/images/projects/icons/marca-peruana.png",
+    "deuman": "/images/projects/icons/deuman.png",
+    "proyecto-ceela": "/images/projects/icons/proyecto-ceela.png",
+    "3s-suministros": "/images/projects/icons/3s-suministros.png",
+    "fixmantech": "/images/projects/icons/fixmantech.png",
+    "serena-seguros": "/images/projects/icons/serena-seguros.png",
+    "muebles-fercho": "/images/projects/icons/muebles-fercho.png",
+    "asu-inventario": "/images/projects/icons/asu-inventario.png",
+    "nexia-2026": "/images/projects/icons/nexia-2026.svg",
+    "expedikids": "/images/projects/icons/expedikids.png",
+    "pidetodomajes": "/images/projects/icons/pidetodomajes.png",
+    "aset-witch": "/images/projects/icons/aset-witch.png",
+    "amerandu": "/images/projects/icons/amerandu.png",
+    "habilab": "/images/projects/icons/habilab.png",
+    "caminos-del-sabor": "/images/projects/icons/caminos-del-sabor.png",
+};
