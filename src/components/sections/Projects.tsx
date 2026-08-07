@@ -33,12 +33,33 @@ function AppIcon({ project, className }: { project: Project; className?: string 
     )
 }
 
+// Intervalo del showcase automático (ms)
+const AUTOPLAY_MS = 4000
+
 export function Projects() {
     const headerRef = useReveal<HTMLDivElement>()
     const desktopRef = React.useRef<HTMLDivElement>(null)
     const [active, setActive] = React.useState<Project | null>(null)
     const [closing, setClosing] = React.useState(false)
     const [originX, setOriginX] = React.useState("50%")
+    const [autoplay, setAutoplay] = React.useState(true)
+    const autoIndexRef = React.useRef(0)
+
+    // Showcase automático: mientras el usuario no elija nada,
+    // abre cada proyecto durante 4s y pasa al siguiente en bucle.
+    React.useEffect(() => {
+        if (!autoplay) return
+        setClosing(false)
+        setOriginX("50%")
+        setActive(projects[autoIndexRef.current % projects.length])
+        const id = window.setInterval(() => {
+            autoIndexRef.current = (autoIndexRef.current + 1) % projects.length
+            setClosing(false)
+            setOriginX("50%")
+            setActive(projects[autoIndexRef.current])
+        }, AUTOPLAY_MS)
+        return () => window.clearInterval(id)
+    }, [autoplay])
 
     const setOrigin = (e: React.MouseEvent<HTMLElement>) => {
         const desk = desktopRef.current?.getBoundingClientRect()
@@ -51,7 +72,9 @@ export function Projects() {
 
     const openApp = (project: Project, e: React.MouseEvent<HTMLElement>) => {
         setOrigin(e)
-        if (active?.id === project.id && !closing) {
+        const wasAutoplay = autoplay
+        setAutoplay(false)
+        if (!wasAutoplay && active?.id === project.id && !closing) {
             closeApp()
             return
         }
@@ -64,6 +87,8 @@ export function Projects() {
         window.setTimeout(() => {
             setActive(null)
             setClosing(false)
+            autoIndexRef.current = 0
+            setAutoplay(true) // vuelve al showcase automático
         }, 280)
     }
 
