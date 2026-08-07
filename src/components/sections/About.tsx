@@ -69,7 +69,7 @@ export function About() {
             <div className="absolute top-1/3 left-1/4 w-[500px] h-[500px] bg-blue-500/5 rounded-full blur-[130px] -z-10 animate-pulse" />
             <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-purple-500/5 rounded-full blur-[120px] -z-10 animate-pulse" style={{ animationDelay: "1s" }} />
 
-            <div className="container px-4 md:px-8 max-w-6xl mx-auto">
+            <div className="w-full px-4 md:px-8 lg:px-12">
 
                 {/* Intro + Stats en 2 columnas (compacto) */}
                 <div className="grid lg:grid-cols-2 gap-8 lg:gap-14 items-center mb-14">

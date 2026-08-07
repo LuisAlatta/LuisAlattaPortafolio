@@ -50,7 +50,7 @@ export default async function ProjectDetailPage({
       <Navbar />
 
       <article className="pt-28 pb-20">
-        <div className="container px-4 md:px-8 max-w-4xl mx-auto">
+        <div className="w-full px-4 md:px-8 lg:px-12">
           <Link
             href="/#projects"
             className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors mb-8"

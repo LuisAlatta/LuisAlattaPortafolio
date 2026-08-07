@@ -115,7 +115,7 @@ export function Technologies() {
 
     return (
         <section id="tech" className="py-16 relative overflow-hidden">
-            <div className="container px-4 md:px-8 max-w-6xl mx-auto z-20 relative">
+            <div className="w-full px-4 md:px-8 lg:px-12 z-20 relative">
                 <div ref={headerRef} className="reveal mb-16 text-center">
                     <h2 className="text-4xl md:text-5xl font-bold tracking-tight mb-6">
                         {language === "es" ? "Stack Tecnológico" : "Tech Stack"}

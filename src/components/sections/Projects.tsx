@@ -53,7 +53,7 @@ export function Projects() {
 
     return (
         <section id="projects" className="py-16 w-full">
-            <div className="container px-4 md:px-8 max-w-6xl mx-auto">
+            <div className="w-full px-4 md:px-8 lg:px-12">
                 <div ref={headerRef} className="reveal mb-10 text-center">
                     <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4 text-white">Proyectos</h2>
                     <div className="w-24 h-1 bg-primary mb-6 mx-auto rounded-full" />
