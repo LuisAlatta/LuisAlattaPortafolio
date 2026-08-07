@@ -221,39 +221,6 @@ export const projects: Project[] = [
         flag: "pe"
     },
     {
-        id: "7",
-        slug: "serena-seguros",
-        title: "Serena Seguros",
-        shortDescription: "Plataforma integral de gestión de seguros con 5 portales por rol sobre un mismo backend.",
-        fullDescription: "Sistema de gestión de aseguradora con backend Spring Boot (Java 21) y frontend Next.js / React, con autenticación JWT y control de acceso por rol. Maneja pólizas, siniestros, reaseguro, leads y comisiones, cobranza y KPIs ejecutivos sobre una base de datos MySQL, con cinco portales diferenciados (asegurado, comercial, técnico, operativo y ejecutivo).",
-        category: "Full Stack",
-        role: "Full Stack Developer",
-        industry: "Seguros / Insurtech",
-        technologies: ["Java", "Spring Boot", "Next.js", "React", "MySQL", "Docker"],
-        platform: "Web",
-        features: [
-            "Cinco portales con enrutamiento y permisos por rol sobre un único backend",
-            "Autenticación JWT con access y refresh tokens",
-            "Gestión de pólizas, siniestros, comisiones y cobranza",
-            "Dashboards y KPIs ejecutivos con gráficos"
-        ],
-        challenges: [
-            "Mantener coherencia de datos y permisos entre cinco portales sobre un mismo backend y base de datos.",
-            "Sincronizar la convención de nombres en toda la cadena Java ↔ JSON ↔ React."
-        ],
-        outcomes: [
-            "Backend modular por dominio con separación clara de responsabilidades y seguridad por roles.",
-            "Stack de observabilidad y despliegue con Docker listo para escalar."
-        ],
-        status: "En desarrollo",
-        demoUrl: "",
-        repoUrl: "",
-        imageUrl: "",
-        accent: "#2563eb",
-        featured: true,
-        flag: "pe"
-    },
-    {
         id: "8",
         slug: "muebles-fercho",
         title: "Muebles Fercho",
@@ -283,39 +250,6 @@ export const projects: Project[] = [
         repoUrl: "",
         imageUrl: "",
         accent: "#a16207",
-        featured: false,
-        flag: "pe"
-    },
-    {
-        id: "9",
-        slug: "asu-inventario",
-        title: "ASU — Inventario y Ventas",
-        shortDescription: "Sistema interno de punto de venta (POS), inventario y ventas con soporte multi-sucursal.",
-        fullDescription: "ERP ligero / POS interno para la empresa de tecnología ASU. Incluye punto de venta, gestión de inventario con kardex, comprobantes, cierre de caja, sucursales, usuarios y un dashboard con métricas de ventas y stock crítico. Usa Supabase como backend con autenticación por credenciales y por PIN protegida mediante middleware.",
-        category: "Full Stack",
-        role: "Full Stack Developer",
-        industry: "Retail / Gestión comercial",
-        technologies: ["Next.js", "React", "TypeScript", "Supabase", "Zod", "Recharts"],
-        platform: "Web",
-        features: [
-            "Punto de venta (POS) y comprobantes con exportación a PDF",
-            "Gestión de inventario: productos, stock y kardex de movimientos",
-            "Cierre de caja y dashboard de ventas, productos top y stock crítico",
-            "Multi-sucursal y autenticación por credenciales o PIN"
-        ],
-        challenges: [
-            "Mantener un control de inventario consistente frente a ventas concurrentes en varias sucursales.",
-            "Implementar autenticación y autorización segura por roles con SSR de Supabase."
-        ],
-        outcomes: [
-            "Digitaliza ventas e inventario de la empresa en una sola herramienta interna.",
-            "Da visibilidad en tiempo real de ventas y stock crítico para decisiones operativas."
-        ],
-        status: "En desarrollo",
-        demoUrl: "",
-        repoUrl: "",
-        imageUrl: "",
-        accent: "#0d9488",
         featured: false,
         flag: "pe"
     },
@@ -549,39 +483,6 @@ export const projects: Project[] = [
         accent: "#db2777",
         featured: false,
         flag: "pe"
-    },
-    {
-        id: "17",
-        slug: "renova",
-        title: "RENOVA",
-        shortDescription: "Sistema de gestión clínica con arquitectura SOA ligera: microservicios REST tras un API Gateway.",
-        fullDescription: "Monorepo que implementa una arquitectura SOA ligera: múltiples microservicios Fastify (auth, pacientes, citas, notificaciones, reportes, facturación) tras un API Gateway, con frontend Next.js. Persistencia poliglota PostgreSQL + MongoDB + Redis, con JWT/RBAC y documentación Swagger por servicio.",
-        category: "Full Stack",
-        role: "Full Stack Developer",
-        industry: "Salud / Gestión clínica",
-        technologies: ["Node.js", "TypeScript", "Fastify", "Next.js", "PostgreSQL", "Docker"],
-        platform: "Web (Microservicios)",
-        features: [
-            "API Gateway con enrutamiento, rate-limit y CORS",
-            "Microservicios independientes con Swagger",
-            "Autenticación JWT con roles (RBAC)",
-            "Infraestructura dockerizada con seed automático"
-        ],
-        challenges: [
-            "Orquestar varios servicios independientes y tres bases de datos manteniendo contratos REST coherentes.",
-            "Diseñar paquetes compartidos reutilizables entre servicios sin acoplarlos."
-        ],
-        outcomes: [
-            "Arquitectura SOA funcional con arranque reproducible en un solo comando.",
-            "Separación limpia de paquetes compartidos (db, auth, tipos, validación)."
-        ],
-        status: "En desarrollo",
-        demoUrl: "",
-        repoUrl: "",
-        imageUrl: "",
-        accent: "#14b8a6",
-        featured: false,
-        flag: "pe"
     }
 ];
 
@@ -594,9 +495,7 @@ export const projectIcons: Record<string, string> = {
     "proyecto-ceela": "/images/projects/icons/proyecto-ceela.png",
     "3s-suministros": "/images/projects/icons/3s-suministros.png",
     "fixmantech": "/images/projects/icons/fixmantech.png",
-    "serena-seguros": "/images/projects/icons/serena-seguros.png",
     "muebles-fercho": "/images/projects/icons/muebles-fercho.png",
-    "asu-inventario": "/images/projects/icons/asu-inventario.png",
     "nexia-2026": "/images/projects/icons/nexia-2026.svg",
     "expedikids": "/images/projects/icons/expedikids.png",
     "pidetodomajes": "/images/projects/icons/pidetodomajes.png",

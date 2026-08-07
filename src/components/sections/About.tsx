@@ -71,27 +71,27 @@ export function About() {
 
             <div className="container px-4 md:px-8 max-w-6xl mx-auto">
 
-                {/* Header — Centered, full-width */}
-                <div className="text-center mb-20">
-                    <h2 data-reveal className="reveal text-4xl md:text-6xl font-bold tracking-tight mb-8 leading-tight text-white">
-                        {language === "es" ? "Sobre mí" : "About me"}
-                    </h2>
-                    <div data-reveal className="reveal reveal-delay-1 max-w-3xl mx-auto">
-                        <p className="text-xl text-white leading-relaxed">
+                {/* Intro + Stats en 2 columnas (compacto) */}
+                <div className="grid lg:grid-cols-2 gap-8 lg:gap-14 items-center mb-14">
+                    <div data-reveal className="reveal">
+                        <h2 className="text-4xl md:text-5xl font-bold tracking-tight mb-4 leading-tight text-white">
+                            {language === "es" ? "Sobre mí" : "About me"}
+                        </h2>
+                        <div className="w-16 h-1 bg-primary rounded-full mb-6" />
+                        <p className="text-base md:text-lg text-white/90 leading-relaxed">
                             {language === "es"
                                 ? profile.about
                                 : "I'm a developer committed to building functional, fast, and visually stunning interfaces. A Systems Engineering student at UTP with hands-on experience in real-world projects — from corporate websites to mobile platforms."}
                         </p>
                     </div>
-                </div>
 
-                {/* Stats Row */}
-                <div className="grid grid-cols-2 lg:grid-cols-4 gap-5 mb-24">
+                    {/* Stats 2x2 */}
+                    <div data-reveal className="reveal reveal-delay-1 grid grid-cols-2 gap-4">
                     {stats.map((stat, i) => (
                         <div
                             key={stat.value}
                             data-reveal
-                            className={`reveal reveal-delay-${Math.min(i + 1, 4)} relative glass-panel rounded-3xl p-7 text-center group cursor-default overflow-hidden transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl`}
+                            className={`reveal reveal-delay-${Math.min(i + 1, 4)} relative glass-panel rounded-2xl p-5 text-center group cursor-default overflow-hidden transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl`}
                             style={{ boxShadow: `0 0 0 0 ${stat.color}` }}
                             onMouseEnter={e => {
                                 (e.currentTarget as HTMLElement).style.boxShadow = `0 0 40px 0 ${stat.color}25`
@@ -111,25 +111,26 @@ export function About() {
                                 style={{ backgroundColor: stat.color }}
                             />
                             <p
-                                className="text-5xl md:text-6xl font-black mb-2 transition-transform duration-300 group-hover:scale-110"
+                                className="text-4xl md:text-5xl font-black mb-1 transition-transform duration-300 group-hover:scale-110"
                                 style={{ color: stat.color }}
                             >
                                 {stat.value}
                             </p>
-                            <p className="text-sm text-muted-foreground font-medium leading-snug">
+                            <p className="text-xs md:text-sm text-muted-foreground font-medium leading-snug">
                                 {stat.label[language]}
                             </p>
                         </div>
                     ))}
+                    </div>
                 </div>
 
                 {/* Highlights Grid */}
-                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5 mb-20">
+                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 mb-12">
                     {highlights.map((item, i) => (
                         <div
                             key={item.title.es}
                             data-reveal
-                            className={`reveal reveal-delay-${Math.min(i + 1, 6)} relative glass-panel rounded-3xl p-7 cursor-default overflow-hidden transition-all duration-500 hover:-translate-y-2 group`}
+                            className={`reveal reveal-delay-${Math.min(i + 1, 6)} relative glass-panel rounded-2xl p-6 cursor-default overflow-hidden transition-all duration-500 hover:-translate-y-2 group`}
                             onMouseEnter={() => setActiveCard(i)}
                             onMouseLeave={() => setActiveCard(null)}
                             style={{
