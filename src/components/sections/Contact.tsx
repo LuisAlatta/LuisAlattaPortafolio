@@ -37,10 +37,6 @@ export function Contact() {
                             <p data-reveal className="reveal reveal-delay-1 mt-7 max-w-sm text-lg md:text-xl leading-relaxed text-[#555650]">
                                 {es ? "Tu próximo proyecto empieza con una conversación. Cuéntame qué tienes en mente." : "Your next project starts with a conversation. Tell me what you have in mind."}
                             </p>
-                            <div data-reveal className="reveal reveal-delay-2 flex items-center gap-2.5 text-sm font-medium mt-8">
-                                <span className="contact-status h-2 w-2 shrink-0 rounded-full bg-[#26704b]" aria-hidden="true" />
-                                {es ? "Disponible para nuevos proyectos" : "Available for new projects"}
-                            </div>
                         </div>
                         <div className="space-y-4">
                             {contactMethods.map((method, i) => (

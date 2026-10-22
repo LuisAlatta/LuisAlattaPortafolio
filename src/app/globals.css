@@ -370,10 +370,6 @@
   transform: scale(0.985);
 }
 
-.contact-status {
-  animation: contact-breathe 2.8s ease-in-out infinite;
-}
-
 @media (hover: hover) {
   .about-detail:hover {
     transform: translateX(6px);
@@ -385,11 +381,6 @@
   }
 }
 
-@keyframes contact-breathe {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.5; transform: scale(0.8); }
-}
-
 @media (prefers-reduced-motion: reduce) {
   .about-detail,
   .about-detail-icon,
@@ -398,9 +389,5 @@
   .contact-row {
     transition: none;
     transform: none !important;
-  }
-
-  .contact-status {
-    animation: none;
   }
 }
