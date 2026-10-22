@@ -34,6 +34,7 @@ function AppIcon({ project, className }: { project: Project; className?: string 
 }
 
 const dockEndOrder = ["fixmantech", "3s-suministros", "nexia-2026"]
+const websiteScale = 0.85
 const dockProjects = projects.filter(project =>
     !["motomajes", "pidetodomajes", "muebles-fercho"].includes(project.slug)
 ).sort((a, b) => dockEndOrder.indexOf(a.slug) - dockEndOrder.indexOf(b.slug))
@@ -132,7 +133,8 @@ export function Projects() {
                                             <button onClick={() => setReloadKey(key => key + 1)} aria-label="Volver al inicio de la web" title="Volver al inicio de la web" className="p-2 rounded-md text-white/60 hover:bg-white/10 hover:text-white focus-visible:outline-2 focus-visible:outline-white">
                                                 <Home className="w-4 h-4" />
                                             </button>
-                                            <a href={active.demoUrl} target="_blank" rel="noopener noreferrer" aria-label={`Abrir ${active.title} en una pestaña nueva`} title="Abrir en una pestaña nueva" className="p-2 rounded-md text-white/60 hover:bg-white/10 hover:text-white focus-visible:outline-2 focus-visible:outline-white">
+                                            <a href={active.demoUrl} target="_blank" rel="noopener noreferrer" title={`Abrir ${active.title} en una pestaña nueva`} className="inline-flex items-center gap-2 rounded-md bg-white px-3 py-2 text-xs font-semibold text-black hover:bg-white/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">
+                                                Ver web real
                                                 <ExternalLink className="w-4 h-4" />
                                             </a>
                                         </div>
@@ -142,17 +144,24 @@ export function Projects() {
                                     <div className="flex flex-1 min-h-0 flex-col">
                                         <div className="flex items-center justify-between gap-3 border-b border-white/10 px-4 py-2 text-[11px] text-white/50">
                                             <span className="truncate">{new URL(active.demoUrl).hostname}</span>
-                                            <a href={active.demoUrl} target="_blank" rel="noopener noreferrer" className="shrink-0 underline underline-offset-2 hover:text-white">¿No carga? Abrir web ↗</a>
+                                            <span className="shrink-0">85%</span>
                                         </div>
-                                        <iframe
+                                        <div className="relative flex-1 min-h-0 overflow-hidden bg-white">
+                                            <iframe
                                             key={`${active.slug}-${reloadKey}`}
                                             src={active.demoUrl}
                                             title={`Sitio web de ${active.title}`}
-                                            className="w-full flex-1 min-h-0 border-0 bg-white"
+                                            className="absolute top-0 left-0 origin-top-left border-0 bg-white"
+                                            style={{
+                                                width: `${100 / websiteScale}%`,
+                                                height: `${100 / websiteScale}%`,
+                                                transform: `scale(${websiteScale})`,
+                                            }}
                                             sandbox="allow-scripts allow-same-origin allow-forms allow-downloads allow-popups allow-popups-to-escape-sandbox"
                                             referrerPolicy="strict-origin-when-cross-origin"
                                             loading="lazy"
-                                        />
+                                            />
+                                        </div>
                                     </div>
                                 ) : (
                                     <div className="flex-1 flex flex-col items-center justify-center gap-4 px-6 text-center">
