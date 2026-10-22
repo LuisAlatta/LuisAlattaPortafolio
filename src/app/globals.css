@@ -329,6 +329,16 @@
   align-items: flex-start;
 }
 
+.project-monitor {
+  --project-scale: 0.85;
+}
+
+@media (max-width: 639px) {
+  .project-monitor {
+    --project-scale: 1;
+  }
+}
+
 .hero-number {
   display: inline-block;
   font-size: clamp(2.5rem, 3.2vw, 3.5rem);

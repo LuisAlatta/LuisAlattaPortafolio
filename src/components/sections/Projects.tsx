@@ -3,7 +3,7 @@ import * as React from "react"
 import { projects, projectIcons, Project } from "@/data/projects"
 import Image from "next/image"
 import { useReveal } from "@/hooks/useReveal"
-import { ExternalLink, Home, Monitor } from "lucide-react"
+import { ExternalLink, Home, Monitor, X } from "lucide-react"
 
 function AppIcon({ project, className }: { project: Project; className?: string }) {
     const icon = projectIcons[project.slug]
@@ -37,7 +37,6 @@ const dockOrder = [
     "marca-peruana", "deuman", "imb-institute", "proyecto-ceela",
     "expedikids", "amerandu", "habilab", "fixmantech", "3s-suministros", "nexia-2026",
 ]
-const websiteScale = 0.85
 const rotationInterval = 6000
 const dockProjects = projects.filter(project =>
     !["motomajes", "pidetodomajes", "muebles-fercho"].includes(project.slug)
@@ -129,15 +128,15 @@ export function Projects() {
                 {/* macOS-style desktop */}
                 <div
                     ref={desktopRef}
-                    className="relative min-w-0 w-full max-w-6xl mx-auto h-[80svh] min-h-[480px] max-h-[680px] sm:h-[680px] sm:max-h-none lg:h-[760px] rounded-2xl sm:rounded-3xl overflow-hidden border border-white/10 shadow-2xl"
+                    className="project-monitor relative min-w-0 w-full max-w-6xl mx-auto h-[calc(100svh-6rem)] min-h-[420px] max-h-[760px] sm:h-[680px] sm:max-h-none lg:h-[760px] rounded-2xl sm:rounded-3xl overflow-hidden border border-white/10 shadow-2xl"
                     style={{ background: "radial-gradient(120% 120% at 20% 0%, #1e2a44 0%, #121a2b 45%, #0a0e17 100%)" }}
                 >
                     {/* Wallpaper glows */}
-                    <div className="absolute -top-20 -left-10 w-96 h-96 rounded-full bg-indigo-500/20 blur-[110px] pointer-events-none" />
-                    <div className="absolute bottom-0 right-0 w-[28rem] h-[28rem] rounded-full bg-fuchsia-500/15 blur-[130px] pointer-events-none" />
+                    <div className="hidden sm:block absolute -top-20 -left-10 w-96 h-96 rounded-full bg-indigo-500/20 blur-[110px] pointer-events-none" />
+                    <div className="hidden sm:block absolute bottom-0 right-0 w-[28rem] h-[28rem] rounded-full bg-fuchsia-500/15 blur-[130px] pointer-events-none" />
 
                     {/* Menu bar */}
-                    <div className="absolute top-0 inset-x-0 h-8 z-30 flex items-center justify-between px-4 text-[11px] font-medium text-white/80 bg-black/25 backdrop-blur-md border-b border-white/10">
+                    <div className="hidden sm:flex absolute top-0 inset-x-0 h-8 z-30 items-center justify-between px-4 text-[11px] font-medium text-white/80 bg-black/25 backdrop-blur-md border-b border-white/10">
                         <span className="flex items-center gap-2">
                             <span className="w-3.5 h-3.5 rounded-[3px] bg-white/80" />
                             <strong className="font-semibold">{active ? active.title : "Portafolio"}</strong>
@@ -156,24 +155,26 @@ export function Projects() {
                     {/* App window */}
                     {active && (
                         <div
-                            className="absolute inset-x-0 top-8 bottom-24 sm:bottom-28 z-20 animate-app-open"
+                            className="absolute inset-x-0 top-0 sm:top-8 bottom-[148px] sm:bottom-28 z-20 animate-app-open"
                             style={{ "--app-origin-x": originX } as React.CSSProperties}
                         >
                             <div className="flex flex-col h-full bg-[#0c0f16]/97 backdrop-blur-xl border-t border-white/10">
                                 {/* Title bar */}
-                                <div className="flex items-center gap-2 px-3 sm:px-4 h-11 shrink-0 bg-white/5 border-b border-white/10">
+                                <div className="flex items-center gap-2 px-3 sm:px-4 h-13 sm:h-11 shrink-0 bg-white/5 border-b border-white/10">
+                                    <div className="h-7 w-7 shrink-0 sm:hidden"><AppIcon project={active} /></div>
                                     <button
                                         onClick={closeApp}
                                         aria-label="Cerrar"
-                                        className="group -ml-1 h-11 w-11 shrink-0 flex items-center justify-center"
+                                        className="group order-last sm:order-none sm:-ml-1 h-11 w-11 shrink-0 flex items-center justify-center rounded-lg hover:bg-white/5 sm:hover:bg-transparent focus-visible:outline-2 focus-visible:outline-white"
                                     >
-                                        <span className="w-3.5 h-3.5 rounded-full bg-[#ff5f57] flex items-center justify-center">
+                                        <X aria-hidden="true" className="h-4 w-4 text-white/70 sm:hidden" />
+                                        <span className="hidden sm:flex w-3.5 h-3.5 rounded-full bg-[#ff5f57] items-center justify-center">
                                         <span className="opacity-0 group-hover:opacity-100 text-[9px] leading-none text-black/60 font-bold">×</span>
                                         </span>
                                     </button>
-                                    <span className="w-3.5 h-3.5 rounded-full bg-[#febc2e]" />
-                                    <span className="w-3.5 h-3.5 rounded-full bg-[#28c840]" />
-                                    <span className="ml-2 min-w-0 flex-1 text-xs font-medium text-white/70 truncate">{active.title}</span>
+                                    <span className="hidden sm:block w-3.5 h-3.5 rounded-full bg-[#febc2e]" />
+                                    <span className="hidden sm:block w-3.5 h-3.5 rounded-full bg-[#28c840]" />
+                                    <span className="sm:ml-2 min-w-0 flex-1 text-sm sm:text-xs font-medium text-white/90 sm:text-white/70 truncate">{active.title}</span>
                                     {active.demoUrl && (
                                         <div className="flex items-center gap-1">
                                             <button onClick={() => { setAutoplay(false); setReloadKey(key => key + 1) }} aria-label="Volver al inicio de la web" title="Volver al inicio de la web" className="flex h-11 w-11 items-center justify-center rounded-md text-white/60 hover:bg-white/10 hover:text-white focus-visible:outline-2 focus-visible:outline-white">
@@ -186,7 +187,7 @@ export function Projects() {
                                     <div className="flex flex-1 min-h-0 flex-col">
                                         <div className="flex items-center justify-between gap-3 border-b border-white/10 px-4 py-2 text-[11px] text-white/50">
                                             <span className="truncate">{new URL(active.demoUrl).hostname}</span>
-                                            <span className="shrink-0">85%</span>
+                                            <span className="shrink-0"><span className="sm:hidden">Vista móvil</span><span className="hidden sm:inline">85%</span></span>
                                         </div>
                                         <div className="relative flex-1 min-h-0 overflow-hidden bg-white">
                                             {frames.map(project => {
@@ -200,9 +201,9 @@ export function Projects() {
                                                         tabIndex={isCurrent ? 0 : -1}
                                                         className={`absolute top-0 left-0 origin-top-left border-0 bg-white ${isCurrent ? "visible" : "invisible pointer-events-none"}`}
                                                         style={{
-                                                            width: `${100 / websiteScale}%`,
-                                                            height: `${100 / websiteScale}%`,
-                                                            transform: `scale(${websiteScale})`,
+                                                            width: "calc(100% / var(--project-scale))",
+                                                            height: "calc(100% / var(--project-scale))",
+                                                            transform: "scale(var(--project-scale))",
                                                         }}
                                                         onLoad={() => setLoadedAt(previous => ({ ...previous, [project.slug]: Date.now() }))}
                                                         sandbox="allow-scripts allow-same-origin allow-forms allow-downloads allow-popups allow-popups-to-escape-sandbox"
@@ -226,10 +227,14 @@ export function Projects() {
                     )}
 
                     {/* Dock */}
-                    <div className="absolute bottom-4 inset-x-0 z-30 flex items-end gap-2 sm:gap-3 px-2 sm:px-4 pointer-events-none">
+                    <div className="absolute bottom-3 sm:bottom-4 inset-x-0 z-30 grid grid-cols-[minmax(0,1fr)_auto] items-center gap-x-3 gap-y-2 sm:flex sm:items-end sm:gap-3 px-3 sm:px-4 pointer-events-none">
+                        <div className="col-start-1 row-start-1 flex min-w-0 items-center gap-2 text-xs text-white/50 sm:hidden">
+                            <span className="font-medium tabular-nums text-white/80">{active ? `${dockProjects.findIndex(project => project.id === active.id) + 1} / ${dockProjects.length}` : `${dockProjects.length} proyectos`}</span>
+                            <span>· Desliza</span>
+                        </div>
                         {/* Caja con headroom para que la magnificación y el nombre no se recorten */}
-                        <div ref={dockRef} role="group" aria-label="Webs del portafolio" className="min-w-0 flex-1 overflow-x-auto overflow-y-visible overscroll-x-contain scrollbar-none pt-24">
-                        <div className="flex items-end gap-1.5 sm:gap-2.5 px-2 sm:px-3 py-2.5 rounded-2xl bg-white/10 backdrop-blur-2xl border border-white/15 shadow-2xl w-max mx-auto pointer-events-auto">
+                        <div ref={dockRef} role="group" aria-label="Webs del portafolio" className="col-span-2 row-start-2 min-w-0 sm:flex-1 overflow-x-auto overflow-y-visible overscroll-x-contain scrollbar-none pt-2 sm:pt-24">
+                        <div className="flex items-end gap-3 sm:gap-2.5 px-2 sm:px-3 py-2 sm:py-2.5 rounded-2xl bg-white/5 sm:bg-white/10 sm:backdrop-blur-2xl border border-white/10 sm:border-white/15 sm:shadow-2xl w-max mx-auto pointer-events-auto">
                             {dockProjects.map((project) => {
                                 const isActive = active?.id === project.id
                                 return (
@@ -238,14 +243,14 @@ export function Projects() {
                                         onClick={(e) => openApp(project, e)}
                                         aria-label={`Abrir ${project.title}`}
                                         aria-pressed={isActive}
-                                        className="group relative shrink-0 flex flex-col items-center rounded-xl focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
+                                        className={`group relative shrink-0 flex flex-col items-center rounded-xl focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white ${isActive ? "bg-white/10 ring-1 ring-white/30 sm:bg-transparent sm:ring-0" : ""}`}
                                     >
                                         {/* Tooltip (por encima del icono magnificado) */}
                                         <span className="hidden sm:block pointer-events-none absolute -top-16 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-md bg-black/85 px-2.5 py-1 text-[11px] font-medium text-white opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100 transition-opacity duration-200 shadow-lg">
                                             {project.title}
                                         </span>
 
-                                        <div className="dock-icon w-11 h-11 sm:w-14 sm:h-14 origin-bottom transition-transform duration-200 ease-out">
+                                        <div className="dock-icon w-12 h-12 sm:w-14 sm:h-14 origin-bottom transition-transform duration-200 ease-out">
                                             <AppIcon project={project} />
                                         </div>
 
@@ -257,7 +262,7 @@ export function Projects() {
                         </div>
                         </div>
                         {active?.demoUrl && (
-                            <a href={active.demoUrl} target="_blank" rel="noopener noreferrer" title={`Abrir ${active.title} en una pestaña nueva`} className="pointer-events-auto mb-3 sm:mb-6 inline-flex min-h-11 shrink-0 items-center gap-1.5 sm:gap-2 rounded-md bg-white px-2 sm:px-3 py-2.5 text-xs font-semibold text-black hover:bg-white/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">
+                            <a href={active.demoUrl} target="_blank" rel="noopener noreferrer" title={`Abrir ${active.title} en una pestaña nueva`} className="col-start-2 row-start-1 justify-self-end pointer-events-auto sm:mb-6 inline-flex min-h-11 shrink-0 items-center gap-2 rounded-lg sm:rounded-md bg-white px-3 py-2.5 text-sm sm:text-xs font-semibold text-black hover:bg-white/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">
                                 Ver web real
                                 <ExternalLink className="w-4 h-4" />
                             </a>
