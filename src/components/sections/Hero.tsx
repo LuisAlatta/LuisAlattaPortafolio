@@ -1,6 +1,6 @@
 "use client"
 import * as React from "react"
-import { ArrowRight, Terminal, MessageCircle } from "lucide-react"
+import { ArrowRight, MessageCircle } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { profile } from "@/data/profile"
 import Link from "next/link"
@@ -8,7 +8,7 @@ import Image from "next/image"
 
 const ProfileCard = ({ className }: { className?: string }) => (
     <div className={className}>
-        <div className="relative aspect-[3/5] max-h-[500px] md:max-h-[800px] w-full max-w-[280px] md:max-w-sm transition-all duration-700 transform-gpu hover:-translate-y-2 group [mask-image:radial-gradient(ellipse_at_center,black_58%,transparent_98%)]">
+        <div className="relative mx-auto aspect-[3/5] max-h-[500px] md:max-h-[800px] w-full max-w-[280px] md:max-w-sm transition-all duration-700 transform-gpu hover:-translate-y-2 group [mask-image:radial-gradient(ellipse_at_center,black_58%,transparent_98%)]">
             <Image
                 src="/perfil.webp"
                 alt="Luis Alatta"
@@ -28,15 +28,9 @@ export function Hero() {
             <div className="absolute inset-0 bg-background [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)] pointer-events-none" />
 
             <div className="w-full px-6 md:px-12 lg:px-20 xl:px-28 relative z-10">
-                <div className="grid lg:grid-cols-2 gap-20 items-center">
+                <div className="grid lg:grid-cols-2 gap-20 items-start">
                     <div className="flex flex-col gap-6 w-full">
                         <div>
-                            <div className="motion-safe:animate-hero-rise inline-flex items-center rounded-full glass-panel px-4 py-1.5 text-xs font-semibold focus:outline-none focus:ring-2 text-foreground mb-6 font-mono shadow-sm">
-                                <Terminal className="w-3 h-3 mr-2" />
-                                <span className="flex h-2 w-2 rounded-full bg-green-500 mr-2 animate-pulse"></span>
-                                status: &quot;Ready for new challenges&quot;
-                            </div>
-
                             <h1 className="text-5xl md:text-7xl font-bold tracking-tight text-white leading-tight mb-4 motion-safe:animate-hero-rise">
                                 Hola, soy {profile.name}
                             </h1>
@@ -66,7 +60,7 @@ export function Hero() {
                         </div>
                     </div>
 
-                    <ProfileCard className="hidden lg:block relative mr-auto motion-safe:animate-hero-pop" />
+                    <ProfileCard className="hidden lg:block relative w-full motion-safe:animate-hero-pop" />
                 </div>
             </div>
         </section>
