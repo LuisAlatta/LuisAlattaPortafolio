@@ -1,90 +1,72 @@
 "use client"
-import * as React from "react"
 import { profile } from "@/data/profile"
-import { MapPin, Mail, MessageCircle, ArrowRight } from "lucide-react"
+import { MapPin, Mail, MessageCircle, ArrowUpRight } from "lucide-react"
 import { useLanguage } from "@/context/LanguageContext"
 import { useRevealGroup } from "@/hooks/useReveal"
 
 export function Contact() {
     const sectionRef = useRevealGroup<HTMLElement>()
     const { language } = useLanguage()
-
+    const es = language === "es"
     const contactMethods = [
         {
             icon: MessageCircle,
-            title: language === "es" ? "WhatsApp" : "WhatsApp",
+            title: "WhatsApp",
             value: profile.phone,
             link: profile.social.whatsapp,
-            label: language === "es" ? "Chatear ahora" : "Chat now",
-            color: "#25D366"
+            label: es ? "Conversemos" : "Let's talk",
         },
         {
             icon: Mail,
-            title: language === "es" ? "Correo electrónico" : "Email",
+            title: es ? "Correo electrónico" : "Email",
             value: profile.email,
             link: `mailto:${profile.email}`,
-            label: language === "es" ? "Enviar correo" : "Send email",
-            color: "#EA4335"
+            label: es ? "Escríbeme" : "Write to me",
         },
-        {
-            icon: MapPin,
-            title: language === "es" ? "Ubicación" : "Location",
-            value: profile.location,
-            link: "#",
-            label: language === "es" ? "Arequipa, Perú" : "Arequipa, Peru",
-            color: "#4285F4"
-        }
     ]
 
     return (
-        <section ref={sectionRef} id="contact" className="py-16 relative overflow-hidden">
-            {/* Background elements */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/5 rounded-full blur-[120px] -z-10" />
-
+        <section ref={sectionRef} id="contact" className="py-16 md:py-24">
             <div className="w-full px-6 md:px-12 lg:px-20 xl:px-28">
-                <div data-reveal className="reveal mb-16 text-center">
-                    <h2 className="text-4xl md:text-5xl font-bold tracking-tight mb-6 text-white text-center">
-                        {language === "es" ? "¡Hablemos de tu próximo proyecto!" : "Let's talk about your next project!"}
-                    </h2>
-                    <p className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-                        {language === "es"
-                            ? "Estoy disponible para nuevos proyectos y colaboraciones. Elige el canal que prefieras y me pondré en contacto contigo de inmediato."
-                            : "I'm available for new projects and collaborations. Choose your preferred channel and I'll get back to you immediately."}
-                    </p>
-                </div>
-
-                <div className="grid md:grid-cols-3 gap-6">
-                    {contactMethods.map((method, i) => (
-                        <a
-                            key={method.title}
-                            href={method.link}
-                            target={method.link.startsWith("http") ? "_blank" : undefined}
-                            rel={method.link.startsWith("http") ? "noreferrer" : undefined}
-                            data-reveal
-                            className={`reveal reveal-delay-${i + 1} glass-panel p-8 rounded-3xl flex flex-col items-center text-center group hover:-translate-y-2 transition-all duration-500 hover:shadow-2xl hover:shadow-primary/10 border border-white/5 hover:border-white/20`}
-                        >
-                            <div
-                                className="w-16 h-16 rounded-2xl flex items-center justify-center mb-6 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-6 shadow-lg"
-                                style={{ backgroundColor: `${method.color}20`, border: `1px solid ${method.color}40` }}
-                            >
-                                <method.icon className="w-7 h-7" style={{ color: method.color }} />
+                <div className="contact-stage rounded-[1.5rem] md:rounded-[2rem] px-6 py-10 md:p-12 lg:p-16 xl:p-20">
+                    <div className="grid items-start gap-12 lg:grid-cols-[1fr_1.1fr] lg:gap-16 xl:gap-24">
+                        <div>
+                            <h2 data-reveal className="reveal text-[clamp(3rem,6.3vw,6.5rem)] font-semibold tracking-[-0.055em] leading-none">
+                                {es ? "Hablemos." : "Let's talk."}
+                            </h2>
+                            <p data-reveal className="reveal reveal-delay-1 mt-7 max-w-sm text-lg md:text-xl leading-relaxed text-[#555650]">
+                                {es ? "Tu próximo proyecto empieza con una conversación. Cuéntame qué tienes en mente." : "Your next project starts with a conversation. Tell me what you have in mind."}
+                            </p>
+                            <div data-reveal className="reveal reveal-delay-2 flex items-center gap-2.5 text-sm font-medium mt-8">
+                                <span className="contact-status h-2 w-2 shrink-0 rounded-full bg-[#26704b]" aria-hidden="true" />
+                                {es ? "Disponible para nuevos proyectos" : "Available for new projects"}
                             </div>
-
-                            <h3 className="text-xl font-bold mb-2 text-white">{method.title}</h3>
-                            <p className="text-muted-foreground mb-6 font-medium">{method.value}</p>
-
-                            <div className="mt-auto flex items-center gap-2 text-sm font-bold text-white group-hover:text-primary transition-colors">
-                                <span>{method.label}</span>
-                                <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
-                            </div>
-                        </a>
-                    ))}
-                </div>
-
-                <div className="mt-20 text-center">
-                    <p className="text-muted-foreground font-mono text-sm uppercase tracking-widest">
-                        Arequipa, Perú • {language === "es" ? "Disponible Remoto" : "Available Remote"}
-                    </p>
+                        </div>
+                        <div className="space-y-4">
+                            {contactMethods.map((method, i) => (
+                                <div key={method.title} data-reveal className={`reveal reveal-delay-${i + 2}`}>
+                                    <a
+                                        href={method.link}
+                                        target={method.link.startsWith("https:") ? "_blank" : undefined}
+                                        rel={method.link.startsWith("https:") ? "noopener noreferrer" : undefined}
+                                        className="contact-row group flex items-center gap-4 rounded-xl p-5 md:p-6 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#171916]"
+                                    >
+                                        <method.icon aria-hidden="true" className="h-6 w-6 shrink-0" strokeWidth={1.5} />
+                                        <div className="min-w-0 flex-1">
+                                            <p className="text-sm text-[#5c5e56] mb-2">{method.title}</p>
+                                            <p className="text-base sm:text-lg xl:text-xl font-medium tracking-tight break-words">{method.value}</p>
+                                            <p className="mt-3 text-sm font-medium">{method.label}</p>
+                                        </div>
+                                        <ArrowUpRight aria-hidden="true" className="contact-arrow h-6 w-6 shrink-0" strokeWidth={1.5} />
+                                    </a>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                    <div data-reveal className="reveal reveal-delay-3 mt-12 md:mt-16 flex flex-wrap items-center justify-between gap-4 text-sm text-[#555650]">
+                        <span className="inline-flex items-center gap-2"><MapPin aria-hidden="true" className="h-4 w-4" />{es ? "Arequipa, Perú" : "Arequipa, Peru"}</span>
+                        <span>{es ? "Trabajemos juntos, estés donde estés." : "Let's work together, wherever you are."}</span>
+                    </div>
                 </div>
             </div>
         </section>

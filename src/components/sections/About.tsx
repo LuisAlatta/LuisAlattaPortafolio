@@ -1,208 +1,136 @@
 "use client"
 import * as React from "react"
-import { useState } from "react"
-import { profile } from "@/data/profile"
-import { Code2, PenTool, Rocket, Heart, ArrowRight, GraduationCap, Briefcase } from "lucide-react"
+import { Code2, PenTool, Rocket, Heart, ArrowUpRight, GraduationCap, Briefcase } from "lucide-react"
 import { useLanguage } from "@/context/LanguageContext"
 import { useRevealGroup } from "@/hooks/useReveal"
 
 const stats = [
-    { value: "+2", label: { es: "Años de Experiencia", en: "Years of Experience" }, color: "#61DAFB", bg: "#61DAFB15" },
-    { value: "+18", label: { es: "Proyectos Realizados", en: "Projects Delivered" }, color: "#3ECF8E", bg: "#3ECF8E15" },
-    { value: "+10", label: { es: "Tecnologías de Vanguardia", en: "Active Technologies" }, color: "#b561d6ff", bg: "#9B59B615" },
-    { value: "100%", label: { es: "Orientado a Resultados", en: "Results-Oriented" }, color: "#e6825aff", bg: "#F7DF1E15" },
+    { value: 2, prefix: "+", suffix: "", label: { es: "Años de experiencia", en: "Years of experience" } },
+    { value: 18, prefix: "+", suffix: "", label: { es: "Proyectos realizados", en: "Projects delivered" } },
+    { value: 10, prefix: "+", suffix: "", label: { es: "Tecnologías en práctica", en: "Technologies in practice" } },
+    { value: 100, prefix: "", suffix: "%", label: { es: "Enfoque en resultados", en: "Results-oriented" } },
 ]
 
 const highlights = [
     {
         icon: GraduationCap,
-        color: "#3178C6",
-        gradient: "from-[#3178C6]/20 to-[#3178C6]/5",
         title: { es: "Ingeniería de Sistemas", en: "Systems Engineering" },
-        desc: { es: "Estudios en ingienería con bases sólidas en algoritmos, redes y arquitectura de software", en: "Studies at UTP with solid foundations in algorithms, networks and software architecture" }
+        desc: { es: "Bases sólidas en algoritmos, redes y arquitectura de software.", en: "Solid foundations in algorithms, networks and software architecture." },
     },
     {
         icon: Code2,
-        color: "#61DAFB",
-        gradient: "from-[#61DAFB]/20 to-[#61DAFB]/5",
-        title: { es: "Código de Calidad", en: "Quality Code" },
-        desc: { es: "Código limpio, estricto y arquitectura escalable en cada proyecto", en: "Clean code, strict TypeScript and scalable architecture in every project" }
+        title: { es: "Código que se sostiene", en: "Code built to last" },
+        desc: { es: "Código limpio y una arquitectura que puede crecer con tu proyecto.", en: "Clean code and architecture that can grow with your project." },
     },
     {
         icon: PenTool,
-        color: "#F24E1E",
-        gradient: "from-[#F24E1E]/20 to-[#F24E1E]/5",
-        title: { es: "Diseño y UX", en: "Design & UX" },
-        desc: { es: "Interfaz que impresionan, convierten y se adaptan a cualquier dispositivo", en: "Interfaces that impress, convert and adapt to any device" }
+        title: { es: "Diseño con intención", en: "Intentional design" },
+        desc: { es: "Interfaces claras, cuidadas y cómodas en cualquier pantalla.", en: "Considered, clear interfaces that feel right on every screen." },
     },
     {
         icon: Briefcase,
-        color: "#3ECF8E",
-        gradient: "from-[#3ECF8E]/20 to-[#3ECF8E]/5",
-        title: { es: "Experiencia Real", en: "Real Experience" },
-        desc: { es: "Proyectos para clientes reales: aplicaciones, webs corporativas y plataformas escalables", en: "Projects for real clients: corporate sites and scalable platforms" }
+        title: { es: "Experiencia real", en: "Real experience" },
+        desc: { es: "Webs corporativas, aplicaciones y plataformas para clientes reales.", en: "Corporate websites, apps and platforms for real clients." },
     },
     {
         icon: Rocket,
-        color: "#9B59B6",
-        gradient: "from-[#9B59B6]/20 to-[#9B59B6]/5",
-        title: { es: "Deployment & DevOps", en: "Deployment & DevOps" },
-        desc: { es: "Vercel, Docker, CI/CD y despliegue continuo con buenas prácticas", en: "Vercel, Docker, CI/CD and continuous deployment with best practices" }
+        title: { es: "Hasta la puesta en marcha", en: "All the way to launch" },
+        desc: { es: "Vercel, Docker y despliegues continuos: del desarrollo a producción.", en: "Vercel, Docker and continuous delivery: from development to production." },
     },
     {
         icon: Heart,
-        color: "#E74C3C",
-        gradient: "from-[#E74C3C]/20 to-[#E74C3C]/5",
-        title: { es: "Pasión por lo Digital", en: "Passion for Digital" },
-        desc: { es: "Aprendizaje continuo, open source y mentalidad de crecimiento growth", en: "Continuous learning, open source contributions and a growth mindset" }
+        title: { es: "Curiosidad constante", en: "Always curious" },
+        desc: { es: "Aprendizaje continuo, open source y ganas de hacer las cosas mejor.", en: "Continuous learning, open source and a drive to do things better." },
     },
 ]
+
+function AnimatedNumber({ value, prefix, suffix }: { value: number; prefix: string; suffix: string }) {
+    const numberRef = React.useRef<HTMLSpanElement>(null)
+
+    React.useEffect(() => {
+        const element = numberRef.current
+        if (!element || !window.IntersectionObserver || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
+        let frame = 0
+        const observer = new IntersectionObserver(entries => {
+            if (!entries.some(entry => entry.isIntersecting)) return
+            observer.disconnect()
+            const start = performance.now()
+            const animate = (now: number) => {
+                const progress = Math.min((now - start) / 1400, 1)
+                const count = Math.round(value * (1 - Math.pow(1 - progress, 3)))
+                element.textContent = `${prefix}${count}${suffix}`
+                if (progress < 1) frame = requestAnimationFrame(animate)
+            }
+            frame = requestAnimationFrame(animate)
+        }, { threshold: 0.7 })
+        observer.observe(element)
+        return () => {
+            observer.disconnect()
+            cancelAnimationFrame(frame)
+        }
+    }, [value, prefix, suffix])
+
+    return (
+        <span className="about-number">
+            <span className="sr-only">{prefix}{value}{suffix}</span>
+            <span ref={numberRef} aria-hidden="true">{prefix}{value}{suffix}</span>
+        </span>
+    )
+}
 
 export function About() {
     const sectionRef = useRevealGroup<HTMLElement>()
     const { language } = useLanguage()
-    const [activeCard, setActiveCard] = useState<number | null>(null)
+    const es = language === "es"
 
     return (
-        <section ref={sectionRef} id="about" className="py-16 relative overflow-hidden">
-            {/* Layered ambient glows */}
-            <div className="absolute top-1/3 left-1/4 w-[500px] h-[500px] bg-blue-500/5 rounded-full blur-[130px] -z-10 animate-pulse" />
-            <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-purple-500/5 rounded-full blur-[120px] -z-10 animate-pulse" style={{ animationDelay: "1s" }} />
-
+        <section ref={sectionRef} id="about" className="py-20 md:py-28">
             <div className="w-full px-6 md:px-12 lg:px-20 xl:px-28">
-
-                {/* Intro + Stats en 2 columnas (compacto) */}
-                <div className="grid lg:grid-cols-2 gap-8 lg:gap-14 items-center mb-14">
-                    <div data-reveal className="reveal">
-                        <h2 className="text-4xl md:text-5xl font-bold tracking-tight mb-4 leading-tight text-white">
-                            {language === "es" ? "Sobre mí" : "About me"}
+                <div className="grid gap-12 lg:grid-cols-[1.1fr_1fr] lg:gap-20 xl:gap-28 items-start">
+                    <div>
+                        <h2 data-reveal className="reveal text-4xl md:text-5xl font-semibold tracking-tight text-white mb-8">
+                            {es ? "Sobre mí" : "About me"}
                         </h2>
-                        <div className="w-16 h-1 bg-primary rounded-full mb-6" />
-                        <p className="text-base md:text-lg text-white/90 leading-relaxed">
-                            {language === "es"
-                                ? profile.about
-                                : "I'm a developer committed to building functional, fast, and visually stunning interfaces. A Systems Engineering student at UTP with hands-on experience in real-world projects — from corporate websites to mobile platforms."}
+                        <p data-reveal className="reveal reveal-delay-1 max-w-xl text-2xl md:text-3xl leading-snug tracking-tight text-white">
+                            {es ? "Me involucro en tu proyecto, de la primera idea a la última línea de código." : "Hands-on with your project, from the first idea to the last line of code."}
                         </p>
-                    </div>
-
-                    {/* Stats 2x2 */}
-                    <div data-reveal className="reveal reveal-delay-1 grid grid-cols-2 gap-4">
-                    {stats.map((stat, i) => (
-                        <div
-                            key={stat.value}
-                            data-reveal
-                            className={`reveal reveal-delay-${Math.min(i + 1, 4)} relative glass-panel rounded-2xl p-5 text-center group cursor-default overflow-hidden transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl`}
-                            style={{ boxShadow: `0 0 0 0 ${stat.color}` }}
-                            onMouseEnter={e => {
-                                (e.currentTarget as HTMLElement).style.boxShadow = `0 0 40px 0 ${stat.color}25`
-                            }}
-                            onMouseLeave={e => {
-                                (e.currentTarget as HTMLElement).style.boxShadow = `0 0 0 0 ${stat.color}`
-                            }}
-                        >
-                            {/* Colored glow disc */}
-                            <div
-                                className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-2xl -z-10"
-                                style={{ background: `radial-gradient(circle at center, ${stat.color}25, transparent 70%)` }}
-                            />
-                            {/* Top accent line */}
-                            <div
-                                className="absolute top-0 left-1/2 -translate-x-1/2 w-12 h-0.5 rounded-full transition-all duration-500 group-hover:w-full"
-                                style={{ backgroundColor: stat.color }}
-                            />
-                            <p
-                                className="text-4xl md:text-5xl font-black mb-1 transition-transform duration-300 group-hover:scale-110"
-                                style={{ color: stat.color }}
-                            >
-                                {stat.value}
-                            </p>
-                            <p className="text-xs md:text-sm text-muted-foreground font-medium leading-snug">
-                                {stat.label[language]}
-                            </p>
+                        <p data-reveal className="reveal reveal-delay-2 mt-6 max-w-xl text-base md:text-lg leading-relaxed text-zinc-400">
+                            {es
+                                ? "Soy Luis, desarrollador Full Stack y estudiante de Ingeniería de Sistemas. Me gusta entender qué necesita un negocio y convertirlo en una web o aplicación que funcione, se sienta bien y pueda crecer."
+                                : "I'm Luis, a Full Stack developer and Systems Engineering student. I like understanding what a business needs and turning it into a website or app that works, feels right and can grow."}
+                        </p>
+                        <p data-reveal className="reveal reveal-delay-3 mt-4 max-w-xl text-base md:text-lg leading-relaxed text-zinc-400">
+                            {es ? "Trabajo en todo el proceso: experiencia de usuario, desarrollo, despliegue y mejora continua. Con atención al detalle y sin perder de vista para qué estamos construyendo." : "I work across the whole process: user experience, development, deployment and ongoing improvement. With attention to detail and a clear sense of what we're building for."}
+                        </p>
+                        <div data-reveal className="reveal reveal-delay-4 mt-8">
+                            <a href="#contact" className="about-contact-link inline-flex items-center gap-3 py-2 text-base font-medium text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white">
+                                {es ? "Conversemos sobre tu idea" : "Let's talk about your idea"}
+                                <ArrowUpRight aria-hidden="true" className="w-5 h-5" />
+                            </a>
                         </div>
-                    ))}
                     </div>
+                    <dl className="grid grid-cols-2 gap-x-5 gap-y-10 lg:pt-2 lg:gap-y-14">
+                        {stats.map((stat, i) => (
+                            <div key={stat.label.es} data-reveal className={`reveal reveal-delay-${i + 1} about-stat`}>
+                                <dt className="text-sm md:text-base text-zinc-400 mt-3">{stat.label[language]}</dt>
+                                <dd className="text-white"><AnimatedNumber value={stat.value} prefix={stat.prefix} suffix={stat.suffix} /></dd>
+                            </div>
+                        ))}
+                    </dl>
                 </div>
-
-                {/* Highlights Grid */}
-                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 mb-12">
+                <div className="mt-14 md:mt-20 grid gap-x-10 gap-y-8 md:grid-cols-2 xl:grid-cols-3 xl:gap-x-14">
                     {highlights.map((item, i) => (
-                        <div
-                            key={item.title.es}
-                            data-reveal
-                            className={`reveal reveal-delay-${Math.min(i + 1, 6)} relative glass-panel rounded-2xl p-6 cursor-default overflow-hidden transition-all duration-500 hover:-translate-y-2 group`}
-                            onMouseEnter={() => setActiveCard(i)}
-                            onMouseLeave={() => setActiveCard(null)}
-                            style={{
-                                boxShadow: activeCard === i ? `0 20px 60px 0 ${item.color}20` : undefined
-                            }}
-                        >
-                            {/* Dynamic colored background on hover */}
-                            <div
-                                className={`absolute inset-0 bg-gradient-to-br ${item.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10`}
-                            />
-                            {/* Top colored accent bar */}
-                            <div
-                                className="absolute top-0 left-0 w-full h-0.5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                                style={{ background: `linear-gradient(90deg, ${item.color}, transparent)` }}
-                            />
-
-                            <div className="flex flex-col gap-5">
-                                {/* Icon with glowing ring */}
-                                <div className="relative w-fit">
-                                    <div
-                                        className="w-14 h-14 rounded-2xl flex items-center justify-center transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3"
-                                        style={{ backgroundColor: `${item.color}20`, border: `1px solid ${item.color}30` }}
-                                    >
-                                        <item.icon className="w-7 h-7 transition-transform duration-300" style={{ color: item.color }} />
-                                    </div>
-                                    {/* Glow ring on hover */}
-                                    <div
-                                        className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-50 transition-opacity duration-500 blur-md"
-                                        style={{ backgroundColor: item.color }}
-                                    />
-                                </div>
-
+                        <div key={item.title.es} data-reveal className={`reveal reveal-delay-${i + 1}`}>
+                            <div className="about-detail flex items-start gap-4 py-2">
+                                <item.icon aria-hidden="true" className="about-detail-icon mt-1 h-5 w-5 shrink-0 text-zinc-500" strokeWidth={1.5} />
                                 <div>
-                                    <p className="text-lg font-bold mb-2 group-hover:text-white transition-colors duration-300">
-                                        {item.title[language]}
-                                    </p>
-                                    <p className="text-sm text-muted-foreground leading-relaxed group-hover:text-foreground/80 transition-colors duration-300">
-                                        {item.desc[language]}
-                                    </p>
+                                    <h3 className="text-base md:text-lg font-medium text-white mb-2">{item.title[language]}</h3>
+                                    <p className="text-sm md:text-base leading-relaxed text-zinc-400 max-w-sm">{item.desc[language]}</p>
                                 </div>
                             </div>
                         </div>
                     ))}
                 </div>
-
-                {/* CTA */}
-                <div data-reveal className="reveal text-center">
-                    <a
-                        href="#contact"
-                        className="inline-flex items-center gap-3 px-10 py-5 rounded-full text-base font-bold group transition-all duration-500 relative overflow-hidden"
-                        style={{
-                            background: "linear-gradient(135deg, rgba(97,218,251,0.15), rgba(155,89,182,0.15))",
-                            border: "1px solid rgba(97,218,251,0.3)"
-                        }}
-                        onMouseEnter={e => {
-                            (e.currentTarget as HTMLElement).style.background = "linear-gradient(135deg, rgba(97,218,251,0.3), rgba(155,89,182,0.3))"
-                                ; (e.currentTarget as HTMLElement).style.transform = "translateY(-4px)"
-                                ; (e.currentTarget as HTMLElement).style.boxShadow = "0 20px 60px rgba(97,218,251,0.2)"
-                        }}
-                        onMouseLeave={e => {
-                            (e.currentTarget as HTMLElement).style.background = "linear-gradient(135deg, rgba(97,218,251,0.15), rgba(155,89,182,0.15))"
-                                ; (e.currentTarget as HTMLElement).style.transform = "translateY(0)"
-                                ; (e.currentTarget as HTMLElement).style.boxShadow = "none"
-                        }}
-                    >
-                        <span className="text-white">
-                            {language === "es" ? "¿Hablamos de tu próximo proyecto?" : "Let's talk about your next project"}
-                        </span>
-                        <ArrowRight className="w-5 h-5 text-white-400 transition-transform duration-300 group-hover:translate-x-2" />
-                    </a>
-                </div>
-
             </div>
         </section>
     )
