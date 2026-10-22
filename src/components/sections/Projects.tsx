@@ -71,7 +71,15 @@ export function Projects() {
                     <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4 text-white">Proyectos</h2>
                     <div className="w-16 h-1 bg-primary mb-8 rounded-full" />
                     <p className="text-lg leading-relaxed text-white mb-5">
-                        Soy <strong className="font-semibold">especialista en SEO</strong>. Desarrollo y optimizo webs para alcanzar los primeros resultados de Google.
+                        Soy <strong className="font-semibold">especialista en SEO</strong>. Desarrollo y optimizo webs para alcanzar los primeros resultados en búsquedas de{" "}
+                        <span role="img" aria-label="Google" className="inline-flex font-semibold">
+                            <span aria-hidden="true" className="text-[#4285F4]">G</span>
+                            <span aria-hidden="true" className="text-[#EA4335]">o</span>
+                            <span aria-hidden="true" className="text-[#FBBC05]">o</span>
+                            <span aria-hidden="true" className="text-[#4285F4]">g</span>
+                            <span aria-hidden="true" className="text-[#34A853]">l</span>
+                            <span aria-hidden="true" className="text-[#EA4335]">e</span>
+                        </span>.
                     </p>
                     <p className="text-base leading-relaxed text-muted-foreground">
                         Puedes probarlo: busca el nombre de cualquiera de estos proyectos en Google y comprueba su posicionamiento.
