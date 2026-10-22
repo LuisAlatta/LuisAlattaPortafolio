@@ -23,6 +23,32 @@ export type Project = {
 
 export const projects: Project[] = [
     {
+        id: "16",
+        slug: "imb-institute",
+        title: "IMB Institute",
+        shortDescription: "Sitio institucional de formación especializada para profesionales y organizaciones.",
+        fullDescription: "Plataforma de International Management and Business Institute con programas de capacitación en gestión, tecnología y otras áreas profesionales. Presenta sus alianzas, novedades y canales de contacto.",
+        category: "Corporativo",
+        role: "Desarrollador Web",
+        industry: "Educación / Capacitación profesional",
+        technologies: ["WordPress"],
+        platform: "Web",
+        features: [
+            "Catálogo de programas de capacitación por área profesional",
+            "Páginas institucionales, alianzas y novedades",
+            "Formulario de contacto y acceso al aula virtual"
+        ],
+        challenges: [],
+        outcomes: [],
+        status: "Completado",
+        demoUrl: "https://imbinstitute.com/",
+        repoUrl: "",
+        imageUrl: "",
+        accent: "#2563eb",
+        featured: true,
+        flag: "pe"
+    },
+    {
         id: "1",
         slug: "motomajes",
         title: "MotoMajes",
@@ -423,6 +449,7 @@ export const projects: Project[] = [
 // Icono/logo representativo de cada proyecto (app-style). Si un slug no está aquí,
 // la UI usa un monograma con el color de acento del proyecto.
 export const projectIcons: Record<string, string> = {
+    "imb-institute": "/images/projects/icons/imb-institute.png",
     "motomajes": "/images/projects/icons/motomajes.png",
     "marca-peruana": "/images/projects/icons/marca-peruana.png",
     "deuman": "/images/projects/icons/deuman.png",
