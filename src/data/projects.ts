@@ -81,7 +81,7 @@ export const projects: Project[] = [
             "Arquitectura serverless de bajo costo respaldada por pruebas automatizadas."
         ],
         status: "En desarrollo",
-        demoUrl: "https://marcaperuana.pe",
+        demoUrl: "https://marcaperuana.com/",
         repoUrl: "",
         imageUrl: "",
         accent: "#dc2626",
@@ -180,7 +180,7 @@ export const projects: Project[] = [
             "Base de contenido centralizada que facilita el mantenimiento por parte del cliente."
         ],
         status: "Completado",
-        demoUrl: "https://3s-suministros.com",
+        demoUrl: "https://www.3s-suministros.com/",
         repoUrl: "",
         imageUrl: "",
         accent: "#eab308",
@@ -279,7 +279,7 @@ export const projects: Project[] = [
             "Sitio estático rápido y con dominio propio de despliegue."
         ],
         status: "Completado",
-        demoUrl: "https://nexia2026.imb.pe",
+        demoUrl: "https://www.buildwithainexia.imbinstitute.com/",
         repoUrl: "",
         imageUrl: "",
         accent: "#7c3aed",
@@ -312,7 +312,7 @@ export const projects: Project[] = [
             "Plataforma de formación autoservicio sobre infraestructura de bajo costo."
         ],
         status: "En desarrollo",
-        demoUrl: "",
+        demoUrl: "https://expedikids.com/",
         repoUrl: "",
         imageUrl: "",
         accent: "#0891b2",
@@ -378,7 +378,7 @@ export const projects: Project[] = [
             "Base de componentes reutilizables y accesibles para futuras secciones."
         ],
         status: "Completado",
-        demoUrl: "",
+        demoUrl: "https://www.amerandu.com/",
         repoUrl: "",
         imageUrl: "",
         accent: "#ca8a04",
@@ -411,7 +411,7 @@ export const projects: Project[] = [
             "Estructura de componentes reutilizable para captación de voluntarios y aliados."
         ],
         status: "Completado",
-        demoUrl: "",
+        demoUrl: "https://thehabilab.com/",
         repoUrl: "",
         imageUrl: "",
         accent: "#65a30d",

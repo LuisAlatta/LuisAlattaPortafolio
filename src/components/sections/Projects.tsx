@@ -3,7 +3,7 @@ import * as React from "react"
 import { projects, projectIcons, Project } from "@/data/projects"
 import Image from "next/image"
 import { useReveal } from "@/hooks/useReveal"
-import { ProjectDetail } from "@/components/projects/ProjectDetail"
+import { ExternalLink, Home, Monitor } from "lucide-react"
 
 function AppIcon({ project, className }: { project: Project; className?: string }) {
     const icon = projectIcons[project.slug]
@@ -33,33 +33,16 @@ function AppIcon({ project, className }: { project: Project; className?: string 
     )
 }
 
-// Intervalo del showcase automático (ms)
-const AUTOPLAY_MS = 4000
+const dockProjects = projects.filter(project =>
+    !["motomajes", "pidetodomajes", "muebles-fercho"].includes(project.slug)
+)
 
 export function Projects() {
     const headerRef = useReveal<HTMLDivElement>()
     const desktopRef = React.useRef<HTMLDivElement>(null)
-    const [active, setActive] = React.useState<Project | null>(null)
-    const [closing, setClosing] = React.useState(false)
+    const [active, setActive] = React.useState<Project | null>(dockProjects[0] ?? null)
     const [originX, setOriginX] = React.useState("50%")
-    const [autoplay, setAutoplay] = React.useState(true)
-    const autoIndexRef = React.useRef(0)
-
-    // Showcase automático: mientras el usuario no elija nada,
-    // abre cada proyecto durante 4s y pasa al siguiente en bucle.
-    React.useEffect(() => {
-        if (!autoplay) return
-        setClosing(false)
-        setOriginX("50%")
-        setActive(projects[autoIndexRef.current % projects.length])
-        const id = window.setInterval(() => {
-            autoIndexRef.current = (autoIndexRef.current + 1) % projects.length
-            setClosing(false)
-            setOriginX("50%")
-            setActive(projects[autoIndexRef.current])
-        }, AUTOPLAY_MS)
-        return () => window.clearInterval(id)
-    }, [autoplay])
+    const [reloadKey, setReloadKey] = React.useState(0)
 
     const setOrigin = (e: React.MouseEvent<HTMLElement>) => {
         const desk = desktopRef.current?.getBoundingClientRect()
@@ -72,24 +55,11 @@ export function Projects() {
 
     const openApp = (project: Project, e: React.MouseEvent<HTMLElement>) => {
         setOrigin(e)
-        const wasAutoplay = autoplay
-        setAutoplay(false)
-        if (!wasAutoplay && active?.id === project.id && !closing) {
-            closeApp()
-            return
-        }
-        setClosing(false)
         setActive(project)
     }
 
     const closeApp = () => {
-        setClosing(true)
-        window.setTimeout(() => {
-            setActive(null)
-            setClosing(false)
-            autoIndexRef.current = 0
-            setAutoplay(true) // vuelve al showcase automático
-        }, 280)
+        setActive(null)
     }
 
     return (
@@ -99,14 +69,14 @@ export function Projects() {
                     <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4 text-white">Proyectos</h2>
                     <div className="w-24 h-1 bg-primary mb-6 mx-auto rounded-full" />
                     <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-                        Un escritorio con cada proyecto como una app. Haz clic en el dock para abrir su caso de estudio.
+                        Elige una web del dock y explórala directamente en el monitor.
                     </p>
                 </div>
 
                 {/* macOS-style desktop */}
                 <div
                     ref={desktopRef}
-                    className="relative w-full max-w-6xl mx-auto h-[600px] sm:h-[680px] lg:h-[760px] rounded-3xl overflow-hidden border border-white/10 shadow-2xl select-none"
+                    className="relative w-full max-w-6xl mx-auto h-[600px] sm:h-[680px] lg:h-[760px] rounded-3xl overflow-hidden border border-white/10 shadow-2xl"
                     style={{ background: "radial-gradient(120% 120% at 20% 0%, #1e2a44 0%, #121a2b 45%, #0a0e17 100%)" }}
                 >
                     {/* Wallpaper glows */}
@@ -134,7 +104,7 @@ export function Projects() {
                     {active && (
                         <div
                             key={active.slug}
-                            className={`absolute inset-x-0 top-8 bottom-0 z-20 ${closing ? "animate-app-close" : "animate-app-open"}`}
+                            className="absolute inset-x-0 top-8 bottom-24 sm:bottom-28 z-20 animate-app-open"
                             style={{ "--app-origin-x": originX } as React.CSSProperties}
                         >
                             <div className="flex flex-col h-full bg-[#0c0f16]/97 backdrop-blur-xl border-t border-white/10">
@@ -149,31 +119,60 @@ export function Projects() {
                                     </button>
                                     <span className="w-3.5 h-3.5 rounded-full bg-[#febc2e]" />
                                     <span className="w-3.5 h-3.5 rounded-full bg-[#28c840]" />
-                                    <span className="mx-auto pr-10 text-xs font-medium text-white/70 truncate">{active.title}</span>
+                                    <span className="ml-2 min-w-0 flex-1 text-xs font-medium text-white/70 truncate">{active.title}</span>
+                                    {active.demoUrl && (
+                                        <div className="flex items-center gap-1">
+                                            <button onClick={() => setReloadKey(key => key + 1)} aria-label="Volver al inicio de la web" title="Volver al inicio de la web" className="p-2 rounded-md text-white/60 hover:bg-white/10 hover:text-white focus-visible:outline-2 focus-visible:outline-white">
+                                                <Home className="w-4 h-4" />
+                                            </button>
+                                            <a href={active.demoUrl} target="_blank" rel="noopener noreferrer" aria-label={`Abrir ${active.title} en una pestaña nueva`} title="Abrir en una pestaña nueva" className="p-2 rounded-md text-white/60 hover:bg-white/10 hover:text-white focus-visible:outline-2 focus-visible:outline-white">
+                                                <ExternalLink className="w-4 h-4" />
+                                            </a>
+                                        </div>
+                                    )}
                                 </div>
-                                {/* Window body (full-screen, contenido centrado y legible) */}
-                                <div className="flex-1 overflow-y-auto px-6 md:px-10 pt-6 pb-28">
-                                    <div className="max-w-4xl mx-auto">
-                                        <ProjectDetail project={active} />
+                                {active.demoUrl ? (
+                                    <div className="flex flex-1 min-h-0 flex-col">
+                                        <div className="flex items-center justify-between gap-3 border-b border-white/10 px-4 py-2 text-[11px] text-white/50">
+                                            <span className="truncate">{new URL(active.demoUrl).hostname}</span>
+                                            <a href={active.demoUrl} target="_blank" rel="noopener noreferrer" className="shrink-0 underline underline-offset-2 hover:text-white">¿No carga? Abrir web ↗</a>
+                                        </div>
+                                        <iframe
+                                            key={`${active.slug}-${reloadKey}`}
+                                            src={active.demoUrl}
+                                            title={`Sitio web de ${active.title}`}
+                                            className="w-full flex-1 min-h-0 border-0 bg-white"
+                                            sandbox="allow-scripts allow-same-origin allow-forms allow-downloads allow-popups allow-popups-to-escape-sandbox"
+                                            referrerPolicy="strict-origin-when-cross-origin"
+                                            loading="lazy"
+                                        />
                                     </div>
-                                </div>
+                                ) : (
+                                    <div className="flex-1 flex flex-col items-center justify-center gap-4 px-6 text-center">
+                                        <Monitor className="w-10 h-10 text-white/40" />
+                                        <h3 className="text-xl font-semibold text-white">{active.title}</h3>
+                                        <p className="max-w-sm text-sm text-white/60">La web de este proyecto todavía no tiene un enlace público disponible.</p>
+                                        <a href={`/proyectos/${active.slug}`} className="rounded-full border border-white/20 px-5 py-2 text-sm text-white hover:bg-white/10">Ver proyecto</a>
+                                    </div>
+                                )}
                             </div>
                         </div>
                     )}
 
                     {/* Dock */}
-                    <div className="absolute bottom-4 inset-x-0 z-30 flex justify-center px-4">
+                    <div className="absolute bottom-4 inset-x-0 z-30 flex justify-center px-4 pointer-events-none">
                         {/* Caja con headroom para que la magnificación y el nombre no se recorten */}
                         <div className="max-w-full overflow-x-auto overflow-y-visible scrollbar-none pt-24">
-                        <div className="flex items-end gap-2 sm:gap-2.5 px-3 py-2.5 rounded-2xl bg-white/10 backdrop-blur-2xl border border-white/15 shadow-2xl w-max mx-auto">
-                            {projects.map((project) => {
+                        <div className="flex items-end gap-2 sm:gap-2.5 px-3 py-2.5 rounded-2xl bg-white/10 backdrop-blur-2xl border border-white/15 shadow-2xl w-max mx-auto pointer-events-auto">
+                            {dockProjects.map((project) => {
                                 const isActive = active?.id === project.id
                                 return (
                                     <button
                                         key={project.id}
                                         onClick={(e) => openApp(project, e)}
                                         aria-label={`Abrir ${project.title}`}
-                                        className="group relative shrink-0 flex flex-col items-center"
+                                        aria-pressed={isActive}
+                                        className="group relative shrink-0 flex flex-col items-center rounded-xl focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
                                     >
                                         {/* Tooltip (por encima del icono magnificado) */}
                                         <span className="pointer-events-none absolute -top-16 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-md bg-black/85 px-2.5 py-1 text-[11px] font-medium text-white opacity-0 group-hover:opacity-100 transition-opacity duration-200 shadow-lg">
