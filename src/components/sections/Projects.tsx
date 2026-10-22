@@ -33,11 +33,14 @@ function AppIcon({ project, className }: { project: Project; className?: string 
     )
 }
 
-const dockEndOrder = ["fixmantech", "3s-suministros", "nexia-2026"]
+const dockOrder = [
+    "marca-peruana", "deuman", "imb-institute", "proyecto-ceela",
+    "expedikids", "amerandu", "habilab", "fixmantech", "3s-suministros", "nexia-2026",
+]
 const websiteScale = 0.85
 const dockProjects = projects.filter(project =>
     !["motomajes", "pidetodomajes", "muebles-fercho"].includes(project.slug)
-).sort((a, b) => dockEndOrder.indexOf(a.slug) - dockEndOrder.indexOf(b.slug))
+).sort((a, b) => dockOrder.indexOf(a.slug) - dockOrder.indexOf(b.slug))
 
 export function Projects() {
     const headerRef = useReveal<HTMLDivElement>()
