@@ -33,9 +33,10 @@ function AppIcon({ project, className }: { project: Project; className?: string 
     )
 }
 
+const dockEndOrder = ["fixmantech", "3s-suministros", "nexia-2026"]
 const dockProjects = projects.filter(project =>
     !["motomajes", "pidetodomajes", "muebles-fercho"].includes(project.slug)
-)
+).sort((a, b) => dockEndOrder.indexOf(a.slug) - dockEndOrder.indexOf(b.slug))
 
 export function Projects() {
     const headerRef = useReveal<HTMLDivElement>()
