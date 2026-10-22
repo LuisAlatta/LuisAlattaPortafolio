@@ -69,6 +69,12 @@ export function Projects() {
                 <div ref={headerRef} className="reveal mb-8 text-center">
                     <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4 text-white">Proyectos</h2>
                     <div className="w-24 h-1 bg-primary mb-6 mx-auto rounded-full" />
+                    <p className="text-lg text-white max-w-2xl mx-auto mb-3">
+                        Soy <strong className="font-semibold">especialista en SEO</strong>. Desarrollo y optimizo webs para alcanzar los primeros resultados de Google.
+                    </p>
+                    <p className="text-base text-muted-foreground max-w-2xl mx-auto mb-5">
+                        Puedes probarlo: busca el nombre de cualquiera de estos proyectos en Google y comprueba su posicionamiento.
+                    </p>
                     <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
                         Elige una web del dock y explórala directamente en el monitor.
                     </p>
