@@ -1,6 +1,5 @@
 "use client"
-import { profile } from "@/data/profile"
-import { Mail, ArrowUpCircle } from "lucide-react"
+import { ArrowUpCircle } from "lucide-react"
 import Link from "next/link"
 
 export function Footer() {
@@ -26,22 +25,6 @@ export function Footer() {
                         <p className="text-muted-foreground text-xs max-w-[280px] leading-relaxed text-center md:text-left">
                             Diseñando y desarrollando experiencias digitales excepcionales con un enfoque en la calidad.
                         </p>
-                    </div>
-
-                    {/* Contact Channel - Horizontal & Compact */}
-                    <div className="flex items-center">
-                        <a
-                            href={`mailto:${profile.email}`}
-                            className="flex items-center gap-4 glass-panel px-5 py-2.5 rounded-2xl hover:bg-white/5 transition-all duration-300 group border border-white/5 hover:border-white/10"
-                        >
-                            <div className="w-9 h-9 rounded-xl bg-primary/10 flex items-center justify-center text-primary group-hover:scale-110 transition-transform">
-                                <Mail className="w-5 h-5" />
-                            </div>
-                            <div className="text-left">
-                                <p className="text-[9px] uppercase tracking-widest font-bold text-muted-foreground leading-none mb-1">Escríbeme</p>
-                                <p className="text-sm font-medium text-white leading-none">{profile.email}</p>
-                            </div>
-                        </a>
                     </div>
 
                     {/* Navigation / Action */}
