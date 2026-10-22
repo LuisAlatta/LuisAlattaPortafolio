@@ -38,6 +38,7 @@ const dockOrder = [
     "expedikids", "amerandu", "habilab", "fixmantech", "3s-suministros", "nexia-2026",
 ]
 const websiteScale = 0.85
+const rotationInterval = 6000
 const dockProjects = projects.filter(project =>
     !["motomajes", "pidetodomajes", "muebles-fercho"].includes(project.slug)
 ).sort((a, b) => dockOrder.indexOf(a.slug) - dockOrder.indexOf(b.slug))
@@ -48,6 +49,27 @@ export function Projects() {
     const [active, setActive] = React.useState<Project | null>(dockProjects[0] ?? null)
     const [originX, setOriginX] = React.useState("50%")
     const [reloadKey, setReloadKey] = React.useState(0)
+    const [autoplay, setAutoplay] = React.useState(true)
+    const [loadedAt, setLoadedAt] = React.useState<Record<string, number>>({})
+    const nextProject = autoplay && active && dockProjects.length > 1
+        ? dockProjects[(dockProjects.findIndex(project => project.id === active.id) + 1) % dockProjects.length]
+        : null
+    const currentLoadedAt = active ? loadedAt[active.slug] : undefined
+    const frames = active ? [active] : []
+    if (currentLoadedAt !== undefined && nextProject) frames.push(nextProject)
+
+    React.useEffect(() => {
+        if (!autoplay || !nextProject || currentLoadedAt === undefined || loadedAt[nextProject.slug] === undefined) return
+
+        const timer = window.setTimeout(() => {
+            setOriginX("50%")
+            setActive(nextProject)
+            // La web precargada conserva su iframe y empieza sus seis segundos al mostrarse.
+            setLoadedAt({ [nextProject.slug]: Date.now() })
+        }, Math.max(0, currentLoadedAt + rotationInterval - Date.now()))
+
+        return () => window.clearTimeout(timer)
+    }, [autoplay, nextProject, currentLoadedAt, loadedAt])
 
     const setOrigin = (e: React.MouseEvent<HTMLElement>) => {
         const desk = desktopRef.current?.getBoundingClientRect()
@@ -59,11 +81,13 @@ export function Projects() {
     }
 
     const openApp = (project: Project, e: React.MouseEvent<HTMLElement>) => {
+        setAutoplay(false)
         setOrigin(e)
         setActive(project)
     }
 
     const closeApp = () => {
+        setAutoplay(false)
         setActive(null)
     }
 
@@ -122,7 +146,6 @@ export function Projects() {
                     {/* App window */}
                     {active && (
                         <div
-                            key={active.slug}
                             className="absolute inset-x-0 top-8 bottom-24 sm:bottom-28 z-20 animate-app-open"
                             style={{ "--app-origin-x": originX } as React.CSSProperties}
                         >
@@ -141,7 +164,7 @@ export function Projects() {
                                     <span className="ml-2 min-w-0 flex-1 text-xs font-medium text-white/70 truncate">{active.title}</span>
                                     {active.demoUrl && (
                                         <div className="flex items-center gap-1">
-                                            <button onClick={() => setReloadKey(key => key + 1)} aria-label="Volver al inicio de la web" title="Volver al inicio de la web" className="p-2 rounded-md text-white/60 hover:bg-white/10 hover:text-white focus-visible:outline-2 focus-visible:outline-white">
+                                            <button onClick={() => { setAutoplay(false); setReloadKey(key => key + 1) }} aria-label="Volver al inicio de la web" title="Volver al inicio de la web" className="p-2 rounded-md text-white/60 hover:bg-white/10 hover:text-white focus-visible:outline-2 focus-visible:outline-white">
                                                 <Home className="w-4 h-4" />
                                             </button>
                                             <a href={active.demoUrl} target="_blank" rel="noopener noreferrer" title={`Abrir ${active.title} en una pestaña nueva`} className="inline-flex items-center gap-2 rounded-md bg-white px-3 py-2 text-xs font-semibold text-black hover:bg-white/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">
@@ -158,20 +181,28 @@ export function Projects() {
                                             <span className="shrink-0">85%</span>
                                         </div>
                                         <div className="relative flex-1 min-h-0 overflow-hidden bg-white">
-                                            <iframe
-                                            key={`${active.slug}-${reloadKey}`}
-                                            src={active.demoUrl}
-                                            title={`Sitio web de ${active.title}`}
-                                            className="absolute top-0 left-0 origin-top-left border-0 bg-white"
-                                            style={{
-                                                width: `${100 / websiteScale}%`,
-                                                height: `${100 / websiteScale}%`,
-                                                transform: `scale(${websiteScale})`,
-                                            }}
-                                            sandbox="allow-scripts allow-same-origin allow-forms allow-downloads allow-popups allow-popups-to-escape-sandbox"
-                                            referrerPolicy="strict-origin-when-cross-origin"
-                                            loading="lazy"
-                                            />
+                                            {frames.map(project => {
+                                                const isCurrent = project.id === active.id
+                                                return (
+                                                    <iframe
+                                                        key={`${project.slug}-${reloadKey}`}
+                                                        src={project.demoUrl}
+                                                        title={`Sitio web de ${project.title}`}
+                                                        aria-hidden={!isCurrent}
+                                                        tabIndex={isCurrent ? 0 : -1}
+                                                        className={`absolute top-0 left-0 origin-top-left border-0 bg-white ${isCurrent ? "visible" : "invisible pointer-events-none"}`}
+                                                        style={{
+                                                            width: `${100 / websiteScale}%`,
+                                                            height: `${100 / websiteScale}%`,
+                                                            transform: `scale(${websiteScale})`,
+                                                        }}
+                                                        onLoad={() => setLoadedAt(previous => ({ ...previous, [project.slug]: Date.now() }))}
+                                                        sandbox="allow-scripts allow-same-origin allow-forms allow-downloads allow-popups allow-popups-to-escape-sandbox"
+                                                        referrerPolicy="strict-origin-when-cross-origin"
+                                                        loading={isCurrent ? "lazy" : "eager"}
+                                                    />
+                                                )
+                                            })}
                                         </div>
                                     </div>
                                 ) : (
