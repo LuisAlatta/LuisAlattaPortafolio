@@ -44,8 +44,8 @@ export function About() {
 
     return (
         <section ref={sectionRef} id="about" className="py-16 md:py-20">
-            <div className="w-full px-6 md:px-12 lg:px-20 xl:px-28">
-                <h2 data-reveal className="reveal text-4xl md:text-5xl font-semibold tracking-tight text-white mb-8 md:mb-10">
+            <div className="w-full px-5 sm:px-6 md:px-12 lg:px-20 xl:px-28">
+                <h2 data-reveal className="reveal text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tight text-white mb-6 sm:mb-8 md:mb-10">
                     {es ? "Sobre mí" : "About me"}
                 </h2>
                 <div className="grid items-start gap-10 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:gap-12 xl:gap-16">

@@ -46,6 +46,7 @@ const dockProjects = projects.filter(project =>
 export function Projects() {
     const headerRef = useReveal<HTMLDivElement>()
     const desktopRef = React.useRef<HTMLDivElement>(null)
+    const dockRef = React.useRef<HTMLDivElement>(null)
     const [active, setActive] = React.useState<Project | null>(dockProjects[0] ?? null)
     const [originX, setOriginX] = React.useState("50%")
     const [reloadKey, setReloadKey] = React.useState(0)
@@ -57,6 +58,14 @@ export function Projects() {
     const currentLoadedAt = active ? loadedAt[active.slug] : undefined
     const frames = active ? [active] : []
     if (currentLoadedAt !== undefined && nextProject) frames.push(nextProject)
+
+    React.useEffect(() => {
+        const scroller = dockRef.current
+        const selected = scroller?.querySelector<HTMLButtonElement>('button[aria-pressed="true"]')
+        if (!scroller || !selected) return
+        const left = scroller.scrollLeft + selected.getBoundingClientRect().left - scroller.getBoundingClientRect().left - (scroller.clientWidth - selected.clientWidth) / 2
+        scroller.scrollTo({ left, behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" })
+    }, [active?.id])
 
     React.useEffect(() => {
         if (!autoplay || !nextProject || currentLoadedAt === undefined || loadedAt[nextProject.slug] === undefined) return
@@ -93,11 +102,11 @@ export function Projects() {
 
     return (
         <section id="projects" className="py-16 w-full">
-            <div className="grid w-full grid-cols-1 items-start gap-8 px-6 md:px-12 lg:grid-cols-[260px_minmax(0,1fr)] lg:px-20 xl:grid-cols-[280px_minmax(0,1fr)] xl:gap-12 xl:px-28">
+            <div className="grid w-full grid-cols-1 items-start gap-6 sm:gap-8 px-4 sm:px-6 md:px-12 lg:grid-cols-[260px_minmax(0,1fr)] lg:px-20 xl:grid-cols-[280px_minmax(0,1fr)] xl:gap-12 xl:px-28">
                 <div ref={headerRef} className="reveal text-left lg:pt-6">
                     <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4 text-white">Proyectos</h2>
                     <div className="w-16 h-1 bg-primary mb-8 rounded-full" />
-                    <p className="text-lg leading-relaxed text-white mb-5">
+                    <p className="text-base sm:text-lg leading-relaxed text-white mb-4 sm:mb-5">
                         Soy <strong className="font-semibold">especialista en SEO</strong>. Desarrollo y optimizo webs para alcanzar los primeros resultados en búsquedas de{" "}
                         <span role="img" aria-label="Google" className="inline-flex font-semibold">
                             <span aria-hidden="true" className="text-[#4285F4]">G</span>
@@ -111,15 +120,16 @@ export function Projects() {
                     <p className="text-base leading-relaxed text-muted-foreground">
                         Puedes probarlo: busca el nombre de cualquiera de estos proyectos en Google y comprueba su posicionamiento.
                     </p>
-                    <p className="mt-8 border-t border-white/10 pt-6 text-sm leading-relaxed text-muted-foreground">
+                    <p className="mt-5 sm:mt-8 border-t border-white/10 pt-4 sm:pt-6 text-sm leading-relaxed text-muted-foreground">
                         Elige una web del dock y explórala directamente en el monitor.
+                        <span className="mt-2 block sm:hidden">Desliza los iconos para ver todas las webs.</span>
                     </p>
                 </div>
 
                 {/* macOS-style desktop */}
                 <div
                     ref={desktopRef}
-                    className="relative min-w-0 w-full max-w-6xl mx-auto h-[600px] sm:h-[680px] lg:h-[760px] rounded-3xl overflow-hidden border border-white/10 shadow-2xl"
+                    className="relative min-w-0 w-full max-w-6xl mx-auto h-[80svh] min-h-[480px] max-h-[680px] sm:h-[680px] sm:max-h-none lg:h-[760px] rounded-2xl sm:rounded-3xl overflow-hidden border border-white/10 shadow-2xl"
                     style={{ background: "radial-gradient(120% 120% at 20% 0%, #1e2a44 0%, #121a2b 45%, #0a0e17 100%)" }}
                 >
                     {/* Wallpaper glows */}
@@ -151,20 +161,22 @@ export function Projects() {
                         >
                             <div className="flex flex-col h-full bg-[#0c0f16]/97 backdrop-blur-xl border-t border-white/10">
                                 {/* Title bar */}
-                                <div className="flex items-center gap-2 px-4 h-11 shrink-0 bg-white/5 border-b border-white/10">
+                                <div className="flex items-center gap-2 px-3 sm:px-4 h-11 shrink-0 bg-white/5 border-b border-white/10">
                                     <button
                                         onClick={closeApp}
                                         aria-label="Cerrar"
-                                        className="group w-3.5 h-3.5 rounded-full bg-[#ff5f57] flex items-center justify-center"
+                                        className="group -ml-1 h-11 w-11 shrink-0 flex items-center justify-center"
                                     >
+                                        <span className="w-3.5 h-3.5 rounded-full bg-[#ff5f57] flex items-center justify-center">
                                         <span className="opacity-0 group-hover:opacity-100 text-[9px] leading-none text-black/60 font-bold">×</span>
+                                        </span>
                                     </button>
                                     <span className="w-3.5 h-3.5 rounded-full bg-[#febc2e]" />
                                     <span className="w-3.5 h-3.5 rounded-full bg-[#28c840]" />
                                     <span className="ml-2 min-w-0 flex-1 text-xs font-medium text-white/70 truncate">{active.title}</span>
                                     {active.demoUrl && (
                                         <div className="flex items-center gap-1">
-                                            <button onClick={() => { setAutoplay(false); setReloadKey(key => key + 1) }} aria-label="Volver al inicio de la web" title="Volver al inicio de la web" className="p-2 rounded-md text-white/60 hover:bg-white/10 hover:text-white focus-visible:outline-2 focus-visible:outline-white">
+                                            <button onClick={() => { setAutoplay(false); setReloadKey(key => key + 1) }} aria-label="Volver al inicio de la web" title="Volver al inicio de la web" className="flex h-11 w-11 items-center justify-center rounded-md text-white/60 hover:bg-white/10 hover:text-white focus-visible:outline-2 focus-visible:outline-white">
                                                 <Home className="w-4 h-4" />
                                             </button>
                                         </div>
@@ -214,10 +226,10 @@ export function Projects() {
                     )}
 
                     {/* Dock */}
-                    <div className="absolute bottom-4 inset-x-0 z-30 flex items-end gap-3 px-4 pointer-events-none">
+                    <div className="absolute bottom-4 inset-x-0 z-30 flex items-end gap-2 sm:gap-3 px-2 sm:px-4 pointer-events-none">
                         {/* Caja con headroom para que la magnificación y el nombre no se recorten */}
-                        <div className="min-w-0 flex-1 overflow-x-auto overflow-y-visible scrollbar-none pt-24">
-                        <div className="flex items-end gap-2 sm:gap-2.5 px-3 py-2.5 rounded-2xl bg-white/10 backdrop-blur-2xl border border-white/15 shadow-2xl w-max mx-auto pointer-events-auto">
+                        <div ref={dockRef} role="group" aria-label="Webs del portafolio" className="min-w-0 flex-1 overflow-x-auto overflow-y-visible overscroll-x-contain scrollbar-none pt-24">
+                        <div className="flex items-end gap-1.5 sm:gap-2.5 px-2 sm:px-3 py-2.5 rounded-2xl bg-white/10 backdrop-blur-2xl border border-white/15 shadow-2xl w-max mx-auto pointer-events-auto">
                             {dockProjects.map((project) => {
                                 const isActive = active?.id === project.id
                                 return (
@@ -229,11 +241,11 @@ export function Projects() {
                                         className="group relative shrink-0 flex flex-col items-center rounded-xl focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
                                     >
                                         {/* Tooltip (por encima del icono magnificado) */}
-                                        <span className="pointer-events-none absolute -top-16 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-md bg-black/85 px-2.5 py-1 text-[11px] font-medium text-white opacity-0 group-hover:opacity-100 transition-opacity duration-200 shadow-lg">
+                                        <span className="hidden sm:block pointer-events-none absolute -top-16 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-md bg-black/85 px-2.5 py-1 text-[11px] font-medium text-white opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100 transition-opacity duration-200 shadow-lg">
                                             {project.title}
                                         </span>
 
-                                        <div className="w-12 h-12 sm:w-14 sm:h-14 origin-bottom transition-transform duration-200 ease-out group-hover:scale-[1.4] group-hover:-translate-y-2">
+                                        <div className="dock-icon w-11 h-11 sm:w-14 sm:h-14 origin-bottom transition-transform duration-200 ease-out">
                                             <AppIcon project={project} />
                                         </div>
 
@@ -245,7 +257,7 @@ export function Projects() {
                         </div>
                         </div>
                         {active?.demoUrl && (
-                            <a href={active.demoUrl} target="_blank" rel="noopener noreferrer" title={`Abrir ${active.title} en una pestaña nueva`} className="pointer-events-auto mb-5 sm:mb-6 inline-flex shrink-0 items-center gap-2 rounded-md bg-white px-3 py-2.5 text-xs font-semibold text-black hover:bg-white/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">
+                            <a href={active.demoUrl} target="_blank" rel="noopener noreferrer" title={`Abrir ${active.title} en una pestaña nueva`} className="pointer-events-auto mb-3 sm:mb-6 inline-flex min-h-11 shrink-0 items-center gap-1.5 sm:gap-2 rounded-md bg-white px-2 sm:px-3 py-2.5 text-xs font-semibold text-black hover:bg-white/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">
                                 Ver web real
                                 <ExternalLink className="w-4 h-4" />
                             </a>

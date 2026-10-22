@@ -49,7 +49,7 @@ export function HeroStats() {
     const { language } = useLanguage()
 
     return (
-        <dl ref={statsRef} className="grid grid-cols-2 gap-x-6 gap-y-7 pt-6 sm:grid-cols-4 lg:grid-cols-2 xl:grid-cols-4">
+        <dl ref={statsRef} className="grid grid-cols-2 gap-x-6 gap-y-5 pt-4 lg:pt-6 sm:grid-cols-4 lg:grid-cols-2 xl:grid-cols-4">
             {stats.map((stat, i) => (
                 <div key={stat.label.es} data-reveal className={`reveal reveal-delay-${i + 1} hero-stat min-w-0`}>
                     <dt className="mt-3 text-sm leading-snug text-zinc-400">{stat.label[language]}</dt>

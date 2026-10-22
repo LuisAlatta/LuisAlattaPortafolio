@@ -193,6 +193,7 @@
   .reveal.is-visible {
     opacity: 1;
     transform: translate3d(0, 0, 0);
+    will-change: auto;
   }
 
   .reveal-pop {
@@ -371,6 +372,10 @@
 }
 
 @media (hover: hover) {
+  .group:hover .dock-icon {
+    transform: translateY(-0.5rem) scale(1.4);
+  }
+
   .about-detail:hover {
     transform: translateX(6px);
   }
@@ -382,6 +387,24 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto !important;
+  }
+
+  .animate-marquee,
+  .animate-marquee-reverse {
+    animation: none;
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-left: 0;
+  }
+
+  .tech-duplicate,
+  .tech-edge-fade {
+    display: none;
+  }
+
   .about-detail,
   .about-detail-icon,
   .about-contact-link svg,
@@ -389,5 +412,16 @@
   .contact-row {
     transition: none;
     transform: none !important;
+  }
+
+  .dock-icon {
+    transition: none;
+    transform: none !important;
+  }
+}
+
+@media (max-width: 767px) {
+  html {
+    scroll-padding-top: 5.5rem;
   }
 }

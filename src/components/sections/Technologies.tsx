@@ -89,8 +89,8 @@ const halfIndex = Math.ceil(allTechItems.length / 2)
 const row1Items = [...allTechItems.slice(0, halfIndex), ...allTechItems.slice(0, halfIndex)]
 const row2Items = [...allTechItems.slice(halfIndex), ...allTechItems.slice(halfIndex)]
 
-const TechCard = ({ item }: { item: { name: string, Icon: IconType, color: string } }) => (
-    <div className="tech-icon-container group relative flex flex-col items-center gap-4 w-28 shrink-0 pt-3">
+const TechCard = ({ item, duplicate = false }: { item: { name: string, Icon: IconType, color: string }; duplicate?: boolean }) => (
+    <div aria-hidden={duplicate || undefined} className={`tech-icon-container ${duplicate ? "tech-duplicate" : ""} group relative flex flex-col items-center gap-3 md:gap-4 w-20 md:w-28 shrink-0 pt-3`}>
         <div className="relative flex items-center justify-center transition-all duration-300 transform-gpu group-hover:-translate-y-3 group-hover:scale-125">
             {/* Color Glow on hover instead of background */}
             <div
@@ -99,7 +99,7 @@ const TechCard = ({ item }: { item: { name: string, Icon: IconType, color: strin
             />
 
             <item.Icon
-                className="w-12 h-12 md:w-14 md:h-14 relative z-10 drop-shadow-lg transition-transform duration-300"
+                className="w-10 h-10 md:w-14 md:h-14 relative z-10 drop-shadow-lg transition-transform duration-300"
                 style={{ color: item.color }}
             />
         </div>
@@ -115,13 +115,13 @@ export function Technologies() {
 
     return (
         <section id="tech" className="py-16 relative overflow-hidden">
-            <div className="w-full px-6 md:px-12 lg:px-20 xl:px-28 z-20 relative">
-                <div ref={headerRef} className="reveal mb-16 text-center">
-                    <h2 className="text-4xl md:text-5xl font-bold tracking-tight mb-6">
+            <div className="w-full px-5 sm:px-6 md:px-12 lg:px-20 xl:px-28 z-20 relative">
+                <div ref={headerRef} className="reveal mb-8 md:mb-16 text-center">
+                    <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight mb-5 md:mb-6">
                         {language === "es" ? "Stack Tecnológico" : "Tech Stack"}
                     </h2>
-                    <div className="w-24 h-1 bg-primary mx-auto mb-8 rounded-full" />
-                    <p className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+                    <div className="w-24 h-1 bg-primary mx-auto mb-6 md:mb-8 rounded-full" />
+                    <p className="text-base sm:text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
                         {language === "es"
                             ? "Conocimiento de lenguajes, frameworks y tecnologías de primer nivel con las que trabajo para crear software de calidad y webs fluidas."
                             : "Ecosystem of top-tier technologies I work with to create fluid software and outstanding interfaces."}
@@ -130,22 +130,22 @@ export function Technologies() {
             </div>
 
             {/* Marquee Infinite Container */}
-            <div className="relative w-full flex flex-col gap-10 mt-10">
+            <div className="relative w-full flex flex-col gap-6 md:gap-10 mt-6 md:mt-10">
                 {/* Lateral Fades for smooth entry/exit */}
-                <div className="absolute inset-y-0 left-0 w-20 md:w-48 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
-                <div className="absolute inset-y-0 right-0 w-20 md:w-48 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
+                <div className="tech-edge-fade absolute inset-y-0 left-0 w-6 md:w-48 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
+                <div className="tech-edge-fade absolute inset-y-0 right-0 w-6 md:w-48 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
 
                 {/* Top Row moving left */}
                 <div className="flex w-max animate-marquee hover:[animation-play-state:paused] gap-5 py-3 px-4 items-center">
                     {row1Items.map((item, index) => (
-                        <TechCard item={item} key={`row1-${item.name}-${index}`} />
+                        <TechCard item={item} duplicate={index >= row1Items.length / 2} key={`row1-${item.name}-${index}`} />
                     ))}
                 </div>
 
                 {/* Bottom Row moving right */}
                 <div className="flex w-max animate-marquee-reverse hover:[animation-play-state:paused] gap-5 py-3 px-4 items-center -ml-10">
                     {row2Items.map((item, index) => (
-                        <TechCard item={item} key={`row2-${item.name}-${index}`} />
+                        <TechCard item={item} duplicate={index >= row2Items.length / 2} key={`row2-${item.name}-${index}`} />
                     ))}
                 </div>
             </div>

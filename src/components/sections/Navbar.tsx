@@ -10,6 +10,7 @@ import { profile } from "@/data/profile"
 export function Navbar() {
     const [isOpen, setIsOpen] = React.useState(false)
     const [isScrolled, setIsScrolled] = React.useState(false)
+    const toggleRef = React.useRef<HTMLButtonElement>(null)
     const { language, setLanguage } = useLanguage()
 
     React.useEffect(() => {
@@ -42,14 +43,14 @@ export function Navbar() {
     const currentLinks = navLinks[language]
 
     return (
-        <header className={cn(
-            "fixed top-0 w-full z-50 transition-all duration-300 border-b",
+        <header onKeyDown={event => { if (event.key === "Escape") { setIsOpen(false); toggleRef.current?.focus() } }} className={cn(
+            "fixed inset-x-0 top-0 w-full z-50 transition-all duration-300 border-b",
             isScrolled
                 ? "glass-panel rounded-b-2xl mx-auto w-[98%] top-2 py-2"
-                : "bg-transparent border-transparent py-4"
+                : "bg-background/95 md:bg-transparent border-transparent py-3 md:py-4"
         )}>
-            <div className="w-full px-6 md:px-12 lg:px-20 xl:px-28 flex items-center justify-between">
-                <Link href="/" className="font-bold text-2xl tracking-tighter flex items-center gap-2 group">
+            <div className="w-full px-5 sm:px-6 md:px-12 lg:px-20 xl:px-28 flex items-center justify-between">
+                <Link href="/" className="font-bold text-xl sm:text-2xl tracking-tighter flex items-center gap-2 group">
 
                     <span>Portafolio<span className="text-primary/100"> Web</span></span>
                 </Link>
@@ -85,7 +86,11 @@ export function Navbar() {
 
                 {/* Mobile Toggle */}
                 <button
-                    className="md:hidden p-2 text-muted-foreground"
+                    ref={toggleRef}
+                    aria-label={language === "es" ? (isOpen ? "Cerrar menú" : "Abrir menú") : (isOpen ? "Close menu" : "Open menu")}
+                    aria-expanded={isOpen}
+                    aria-controls="mobile-navigation"
+                    className="md:hidden flex h-11 w-11 items-center justify-center rounded-lg text-muted-foreground focus-visible:outline-2 focus-visible:outline-white"
                     onClick={() => setIsOpen(!isOpen)}
                 >
                     {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -94,12 +99,12 @@ export function Navbar() {
 
             {/* Mobile Menu */}
             {isOpen && (
-                <div className="md:hidden absolute top-full left-0 w-full glass-panel border-t border-white/10 py-6 px-4 flex flex-col gap-4 animate-in slide-in-from-top-4">
+                <nav id="mobile-navigation" aria-label={language === "es" ? "Navegación principal" : "Main navigation"} className="md:hidden absolute top-full left-0 w-full rounded-b-2xl bg-[#111113] border-t border-white/10 py-5 px-4 flex flex-col gap-3">
                     {currentLinks.map((link) => (
                         <Link
                             key={link.href}
                             href={link.href}
-                            className="text-lg font-medium px-4 py-2 hover:bg-white/5 rounded-xl"
+                            className="text-base font-medium px-4 py-3 hover:bg-white/5 rounded-xl"
                             onClick={() => setIsOpen(false)}
                         >
                             {link.name}
@@ -113,18 +118,18 @@ export function Navbar() {
                                 setLanguage(language === "es" ? "en" : "es")
                                 setIsOpen(false)
                             }}
-                            className="gap-2"
+                            className="gap-2 min-h-11"
                         >
                             <Globe className="w-4 h-4" />
                             {language === "es" ? "English" : "Español"}
                         </Button>
-                        <Button asChild onClick={() => setIsOpen(false)}>
+                        <Button asChild className="min-h-11" onClick={() => setIsOpen(false)}>
                             <a href={profile.social.whatsapp} target="_blank" rel="noreferrer">
                                 {language === "es" ? "Contactar" : "Contact"}
                             </a>
                         </Button>
                     </div>
-                </div>
+                </nav>
             )}
         </header>
     )
