@@ -4,13 +4,6 @@ import { Code2, PenTool, Rocket, Heart, ArrowUpRight, GraduationCap, Briefcase }
 import { useLanguage } from "@/context/LanguageContext"
 import { useRevealGroup } from "@/hooks/useReveal"
 
-const stats = [
-    { value: 2, prefix: "+", suffix: "", label: { es: "Años de experiencia", en: "Years of experience" } },
-    { value: 18, prefix: "+", suffix: "", label: { es: "Proyectos realizados", en: "Projects delivered" } },
-    { value: 10, prefix: "+", suffix: "", label: { es: "Tecnologías en práctica", en: "Technologies in practice" } },
-    { value: 100, prefix: "", suffix: "%", label: { es: "Enfoque en resultados", en: "Results-oriented" } },
-]
-
 const highlights = [
     {
         icon: GraduationCap,
@@ -44,40 +37,6 @@ const highlights = [
     },
 ]
 
-function AnimatedNumber({ value, prefix, suffix }: { value: number; prefix: string; suffix: string }) {
-    const numberRef = React.useRef<HTMLSpanElement>(null)
-
-    React.useEffect(() => {
-        const element = numberRef.current
-        if (!element || !window.IntersectionObserver || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
-        let frame = 0
-        const observer = new IntersectionObserver(entries => {
-            if (!entries.some(entry => entry.isIntersecting)) return
-            observer.disconnect()
-            const start = performance.now()
-            const animate = (now: number) => {
-                const progress = Math.min((now - start) / 1400, 1)
-                const count = Math.round(value * (1 - Math.pow(1 - progress, 3)))
-                element.textContent = `${prefix}${count}${suffix}`
-                if (progress < 1) frame = requestAnimationFrame(animate)
-            }
-            frame = requestAnimationFrame(animate)
-        }, { threshold: 0.7 })
-        observer.observe(element)
-        return () => {
-            observer.disconnect()
-            cancelAnimationFrame(frame)
-        }
-    }, [value, prefix, suffix])
-
-    return (
-        <span className="about-number">
-            <span className="sr-only">{prefix}{value}{suffix}</span>
-            <span ref={numberRef} aria-hidden="true">{prefix}{value}{suffix}</span>
-        </span>
-    )
-}
-
 export function About() {
     const sectionRef = useRevealGroup<HTMLElement>()
     const { language } = useLanguage()
@@ -109,27 +68,19 @@ export function About() {
                             </a>
                         </div>
                     </div>
-                    <dl className="grid grid-cols-2 gap-x-5 gap-y-10 lg:pt-2 lg:gap-y-14">
-                        {stats.map((stat, i) => (
-                            <div key={stat.label.es} data-reveal className={`reveal reveal-delay-${i + 1} about-stat`}>
-                                <dt className="text-sm md:text-base text-zinc-400 mt-3">{stat.label[language]}</dt>
-                                <dd className="text-white"><AnimatedNumber value={stat.value} prefix={stat.prefix} suffix={stat.suffix} /></dd>
-                            </div>
-                        ))}
-                    </dl>
-                </div>
-                <div className="mt-14 md:mt-20 grid gap-x-10 gap-y-8 md:grid-cols-2 xl:grid-cols-3 xl:gap-x-14">
-                    {highlights.map((item, i) => (
-                        <div key={item.title.es} data-reveal className={`reveal reveal-delay-${i + 1}`}>
-                            <div className="about-detail flex items-start gap-4 py-2">
-                                <item.icon aria-hidden="true" className="about-detail-icon mt-1 h-5 w-5 shrink-0 text-zinc-500" strokeWidth={1.5} />
-                                <div>
-                                    <h3 className="text-base md:text-lg font-medium text-white mb-2">{item.title[language]}</h3>
-                                    <p className="text-sm md:text-base leading-relaxed text-zinc-400 max-w-sm">{item.desc[language]}</p>
+                    <div className="grid gap-x-6 gap-y-7 sm:grid-cols-2 lg:pt-2">
+                        {highlights.map((item, i) => (
+                            <div key={item.title.es} data-reveal className={`reveal reveal-delay-${i + 1}`}>
+                                <div className="about-detail flex items-start gap-4 py-2">
+                                    <item.icon aria-hidden="true" className="about-detail-icon mt-1 h-5 w-5 shrink-0 text-zinc-500" strokeWidth={1.5} />
+                                    <div>
+                                        <h3 className="text-base md:text-lg font-medium text-white mb-2">{item.title[language]}</h3>
+                                        <p className="text-sm md:text-base leading-relaxed text-zinc-400 max-w-sm">{item.desc[language]}</p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    ))}
+                        ))}
+                    </div>
                 </div>
             </div>
         </section>

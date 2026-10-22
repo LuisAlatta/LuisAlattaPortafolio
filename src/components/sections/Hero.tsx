@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button"
 import { profile } from "@/data/profile"
 import Link from "next/link"
 import Image from "next/image"
+import { HeroStats } from "@/components/sections/HeroStats"
 
 const ProfileCard = ({ className }: { className?: string }) => (
     <div className={className}>
@@ -58,6 +59,7 @@ export function Hero() {
                                 </Link>
                             </Button>
                         </div>
+                        <HeroStats />
                     </div>
 
                     <ProfileCard className="hidden lg:block relative w-full motion-safe:animate-hero-pop" />
