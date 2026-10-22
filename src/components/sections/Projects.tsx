@@ -66,17 +66,17 @@ export function Projects() {
 
     return (
         <section id="projects" className="py-16 w-full">
-            <div className="w-full px-6 md:px-12 lg:px-20 xl:px-28">
-                <div ref={headerRef} className="reveal mb-8 text-center">
+            <div className="grid w-full grid-cols-1 items-start gap-8 px-6 md:px-12 lg:grid-cols-[260px_minmax(0,1fr)] lg:px-20 xl:grid-cols-[280px_minmax(0,1fr)] xl:gap-12 xl:px-28">
+                <div ref={headerRef} className="reveal text-left lg:pt-6">
                     <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4 text-white">Proyectos</h2>
-                    <div className="w-24 h-1 bg-primary mb-6 mx-auto rounded-full" />
-                    <p className="text-lg text-white max-w-2xl mx-auto mb-3">
+                    <div className="w-16 h-1 bg-primary mb-8 rounded-full" />
+                    <p className="text-lg leading-relaxed text-white mb-5">
                         Soy <strong className="font-semibold">especialista en SEO</strong>. Desarrollo y optimizo webs para alcanzar los primeros resultados de Google.
                     </p>
-                    <p className="text-base text-muted-foreground max-w-2xl mx-auto mb-5">
+                    <p className="text-base leading-relaxed text-muted-foreground">
                         Puedes probarlo: busca el nombre de cualquiera de estos proyectos en Google y comprueba su posicionamiento.
                     </p>
-                    <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+                    <p className="mt-8 border-t border-white/10 pt-6 text-sm leading-relaxed text-muted-foreground">
                         Elige una web del dock y explórala directamente en el monitor.
                     </p>
                 </div>
@@ -84,7 +84,7 @@ export function Projects() {
                 {/* macOS-style desktop */}
                 <div
                     ref={desktopRef}
-                    className="relative w-full max-w-6xl mx-auto h-[600px] sm:h-[680px] lg:h-[760px] rounded-3xl overflow-hidden border border-white/10 shadow-2xl"
+                    className="relative min-w-0 w-full max-w-6xl mx-auto h-[600px] sm:h-[680px] lg:h-[760px] rounded-3xl overflow-hidden border border-white/10 shadow-2xl"
                     style={{ background: "radial-gradient(120% 120% at 20% 0%, #1e2a44 0%, #121a2b 45%, #0a0e17 100%)" }}
                 >
                     {/* Wallpaper glows */}
